@@ -1,6 +1,6 @@
 ## AWS KMS External Keystore (XKS) Proxy API Specification
 
-This repository contains the AWS KMS External Keystore (XKS) Proxy API Specification in markdown format, which can be generated into a PDF via pandoc.
+This repository contains the AWS KMS External Keystore (XKS) Proxy API Specification in markdown format, which can be used to generate a PDF file via [pandoc](https://pandoc.org/).
 
 ### Install pandoc
 
