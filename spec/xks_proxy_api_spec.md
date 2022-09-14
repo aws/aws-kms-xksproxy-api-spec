@@ -11,7 +11,7 @@
 
 Refer to the Change Log in [Appendix E](#appendix-e) for a history of the changes.
 
-*Last Updated: Aug 19, 2022*
+*Last Updated: Sep 12, 2022*
 
 ## Background
 
@@ -90,7 +90,7 @@ The URIs used in the XKS Proxy API calls start with something that looks like
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size="1">https://\<server>[/\<optional-path-prefix>]/kms/xks/v1</font>
 
-where the italicized parts will vary. Portions of the URL shown within square brackets are optional. This URI prefix is configured into KMS as part of the `CreateCustomKeyStore` API when a customer sets up an external key manager for use with KMS. The part `https://\<server>` is specified directly via the `XksProxyUriEndpoint` parameter and the `XksProxyUriPath` parameter specifies `[/<optional-path-prefix>]/kms/xks/v1`.  The total length of the `XksProxyUriPath` MUST NOT exceed 128 characters and MUST NOT include any characters other than a through z, A through Z, 0 through 9, slash (/), dash (-) and underscore (\_). The `<optional-path-prefix>` provides a mechanism to support multiple isolated customers on the same XKS proxy. An XKS proxy MAY implement independent request quotas on each path prefix and respond with a ThrottlingException (see [Error Codes](#error-codes)) if that quota is exceeded.
+where the parts within angle brackets will vary. Portions of the URL shown within square brackets are optional. This URI prefix is configured into KMS as part of the `CreateCustomKeyStore` API when a customer sets up an external key manager for use with KMS. The part `https://<server>` is specified directly via the `XksProxyUriEndpoint` parameter and the `XksProxyUriPath` parameter specifies `[/<optional-path-prefix>]/kms/xks/v1`.  The total length of the `XksProxyUriPath` MUST NOT exceed 128 characters and MUST NOT include any characters other than a through z, A through Z, 0 through 9, slash (/), dash (-) and underscore (\_). The `<optional-path-prefix>` provides a mechanism to support multiple isolated customers on the same XKS proxy. An XKS proxy MAY implement independent request quotas on each path prefix and respond with a ThrottlingException (see [Error Codes](#error-codes)) if that quota is exceeded.
 
 The XKS APIs involving an external key (encrypt, decrypt, getKeyMetadata) use URIs of the form
 
@@ -100,7 +100,6 @@ The **`<server>`** MUST be a fully qualified domain name (rather than an IP addr
 
 The encoding of **`externalKeyId`** is opaque to AWS KMS. The only requirements are: (i) the XKS Proxy MUST be able to identify an external key unambiguously from its **`externalKeyId`**, (ii) the length of an **`externalKeyId`** MUST NOT exceed 128 characters and they MUST be restricted to the following set: uppercase or lowercase letters A through Z, the digits 0 through 9, the hyphen and the underscore.
 
-**NOTE**: The list of requestMetadata elements shown in the following sections is not comprehensive. We are investigating the ability to include additional metadata such as PrincipalServiceName, SourceIdentity etc as described in [AWS global condition context keys](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_condition-keys.html) and kmsRecipientAttestationImageSha384, kmsRecipientAttestationPCR<PCR_ID> as described in [AWS KMS condition keys for AWS Nitro Enclaves](https://docs.aws.amazon.com/kms/latest/developerguide/policy-conditions.html#conditions-nitro-enclaves). KMS might add other fields based on customer feedback from the private preview of this feature. Similarly, some of the proposed fields may be removed based on AWS internal security review. We feel that progress on building the XKS Proxy should not be blocked waiting to finalize this list.
 
 \pagebreak
 
@@ -570,7 +569,7 @@ If KMS does not receive a response from the XKS proxy for any API call within 25
 
 ### Error Codes {#error-codes}
 
-We use standard HTTP error codes but leverage the HTTP body for disambiguation/additional details, e.g. multiple kinds of errors map to HTTP 400.  The table below shows the HTTP error code and Error Name returned by the XKS proxy to signal various error conditions for different APIs. Column 3 indicates the scenario when the corresponding error is returned and column 4 lists the applicable XKS proxy APIs.
+We use standard HTTP error codes but leverage the HTTP body for disambiguation/additional details, e.g. multiple kinds of errors map to HTTP 400. The HTTP body includes a JSON object with `errorName` and an optional `errorMessage`. The table below shows the HTTP error code and Error Name returned by the XKS proxy to signal various error conditions for different APIs. Column 3 indicates the scenario when the corresponding error is returned and column 4 lists the applicable XKS proxy APIs. The `errorMessage`, if included, MUST be less than 512 characters in length and only use printable ASCII characters, i.e. hex values 0x20 (space) through 0x7e (tilde).
 
 \pagebreak
 
@@ -642,45 +641,49 @@ We use standard HTTP error codes but leverage the HTTP body for disambiguation/a
 \pagebreak
 
 **Example:**
-The following example illustrates a failure when a decrypt operation is called on an external key with ciphertext that was created using a different value of the additionalAuthenticatedData (AAD) field.
+The following example illustrates a failure when a decrypt operation is called on an external key with ciphertext that was created using a different value of the additionalAuthenticatedData (AAD) field. The optional `errorMessage` field allows the proxy to provide additional details on the cause of failure.
 
 **HTTP Error Code:** 400 (Bad Request)
 **Response Payload Example**: 
 
 ```
 {
-    "errorName": "InvalidCiphertextException"
+    "errorName": "InvalidCiphertextException", // required
+    "errorMessage": "The request was rejected because the specified ciphertext, or additional authenticated data is corrupted, missing, or otherwise invalid." // optional
 }
 ```
 
 **KMS Considerations:**
 
-While the external key store feature introduces new failure scenarios in exisiting KMS APIs, KMS cannot introduce new exceptions without breaking backward compatibility for other AWS services that call KMS. Instead, KMS will use the exception message string to communicate what went wrong and what to do about it. The following table shows the new KMS exception messages introduced by the External Key Store feature and situation when those messages are used.
+While the external key store feature introduces new failure scenarios in exisiting KMS APIs, KMS cannot introduce new exceptions without breaking backward compatibility for other AWS services that call KMS. Instead, KMS will use the exception message string to communicate what went wrong and what to do about it. The following table shows the new KMS exception messages introduced by the External Key Store feature and situations when those messages are used.
 
-When the XKS proxy returns a JSON formatted response with errorName, KMS will use the errorName to determine the exception message as shown. Depending on the KMS API being invoked, the same failure scenario can result in different exceptions but the exception message will be the same.
+When the XKS proxy returns a JSON formatted response with `errorName`, KMS will use the `errorName` to determine the exception message as shown. Depending on the KMS API being invoked, the same failure scenario can result in different exceptions but the exception message will be the same. KMS will not include the `errorMessage` returned by the proxy in the error message it returns to a KMS caller. Instead, KMS will log that string in Amazon CloudWatch Logs for the calling account.
 
-If an XKS proxy returns an HTTP error code without a JSON-formatted body or any other type of malformed response, the KMS exception message will be generic and say "AWS KMS cannot interpret the response from the external key store proxy. If you see this error repeatedly, report it to the vendor of your external key store proxy."
+If an XKS proxy returns an HTTP error code without a JSON-formatted body or any other type of malformed response, the KMS exception message will be generic and say "AWS KMS cannot interpret the response from the external key store proxy. If you see this error repeatedly, report it to your external key store proxy administrator."
 
 \pagebreak
 
 \begin{table}[h!]
   \begin{center}
     \begin{tabular}{l l l}
-      \hline
+      \hline \hline
                            & \textbf{KMS Exception}   &  \textbf{KMS Exception}\\
       \textbf{Failure Scenario}   & \textbf{(KMS Operation)} &  \textbf{Message} \\
-      \hline
+      \hline \hline
       Proxy returns a      & XksProxyInvalidResponseException     & AWS KMS cannot interpret the \\ 
       ValidationException  & (Create/UpdateCustomKeyStore)        & response from the external \\
                            & CustomKeyStoreInvalidStateException  & key store proxy. If you see \\
                            & (CreateKey)                          & this error repeatedly, report \\  
-                           & KMSInvalidStateException             & it to the vendor of your \\
-                           & (Cryptographic operations)           & external key store proxy. \\
+                           & KMSInvalidStateException             & it to your external key store \\
+                           & (Cryptographic operations)           & proxy administrator. \\
       \hline
-      Proxy returns an      & XksKeyInvalidConfigurationException & The external key store proxy \\
-      InvalidStateException & (CreateKey)                         & rejected the request because \\
-                            & KMSInvalidStateException            & the external key is not \\
-                            & (Cryptographic operations)          & enabled in the external HSM.\\
+      Proxy returns an      & XksKeyInvalidConfigurationException & The external key associated \\
+      InvalidStateException & (CreateKey)                         & with this KMS key in an \\
+                            & KMSInvalidStateException            & external key store is not \\
+                            & (Cryptographic operations)          & enabled in the external HSM. \\
+                            &                                     & Enable the external key in \\
+                            &                                     & the external HSM and retry \\
+                            &                                     & the request. \\
       \hline
       Proxy returns an      & KMSInvalidStateException            & The external key store proxy \\
 InvalidCiphertextException  & (Decrypt, ReEncrypt)                & rejected the request because \\
@@ -690,16 +693,17 @@ InvalidCiphertextException  & (Decrypt, ReEncrypt)                & rejected the
       \hline
       Proxy returns an      & KMSInvalidStateException            & The ciphertext that the external \\
 invalid ciphertext          & (Decrypt, ReEncrypt)                & key store proxy submitted for \\
-                            &                                     & decryption, or the encryption context, \\
-                            &                                     & is corrupted, missing, or otherwise \\
-                            &                                     & invalid. \\
+                            &                                     & decryption, or the encryption \\
+                            &                                     & context, is corrupted, missing, \\
+                            &                                     & or otherwise invalid. \\
       \hline
-      Proxy returns an      & XksKeyInvalidConfigurationException & The external key store proxy \\
-InvalidKeyUsageException    & (CreateKey)                         & rejected the request because \\
-                            & KMSInvalidStateException            & the external key does not \\
-                            & (Cryptographic operations)          & support the requested  \\
-                            &                                     & operation.             \\
-                            &                                     &                        \\
+      Proxy returns an      & XksKeyInvalidConfigurationException & The external key associated  \\
+InvalidKeyUsageException    & (CreateKey)                         & with this KMS key in an  \\
+                            & KMSInvalidStateException            & external key store does not \\
+                            & (Cryptographic operations)          & support the requested operation. \\
+                            &                                     & Enable the operation on the \\
+                            &                                     & key in your external HSM,\\
+                            &                                     & and try the request again. \\
       \hline
       Proxy returns an      & XksProxyIncorrectAuthentication     & The external key store proxy \\
 AuthenticationFailedException  & CredentialException              & rejected the request because \\
@@ -711,27 +715,19 @@ AuthenticationFailedException  & CredentialException              & rejected the
       \hline
       Proxy returns an      & KMSInvalidStateException            & The external key store proxy \\
     AccessDeniedException   & (CreateKey, Crypto operations)      & denied access to the operation. \\
-                            &                                     & This can happen when the user \\
-                            &                                     & or the external key isn't \\
-                            &                                     & authorized for this operation. \\
+                            &                                     & Verify that the user and the\\
+                            &                                     & external key are both \\
+                            &                                     & authorized for this operation, \\
+                            &                                     & and try the request again. \\
       \hline
-      Proxy returns a       & XksKeyNotFoundException             & The external key store proxy \\
-    KeyNotFoundException    & (CreateKey)                         & rejected the request because \\
-                            & KMSInvalidStateException            & it could not find the external \\
-                            & (Cryptographic operations)          & key. \\
-      \hline
-      Proxy returns an      & XksProxyInvalidConfigurationException & The external key store proxy \\
-   InvalidUriPathException  & (Create/UpdateCustomKeyStore)       & rejected the request because \\
-                            & CustomKeyStoreInvalidStateException & of an invalid URI path. Verify \\
-                            & (CreateKey)                         & the URI path for your external \\
-                            & KMSInvalidStateException            & key store and update if \\
-                            & (Cryptographic operations)          & necessary. \\
-      \hline
-      Proxy returns an      & XksKeyInvalidResponseException      & The external key store proxy \\
- UnsupportedOperationException & (CreateKey)                      & rejected the request because \\
-                            & KMSInvalidStateException            & it does not support the \\
-                            & (Cryptographic operations)          & requested cryptographic \\
-                            &                                     & operation. \\
+      Proxy returns a       & XksKeyNotFoundException             & The external key associated \\
+    KeyNotFoundException    & (CreateKey)                         & with this KMS key in an \\
+                            & KMSInvalidStateException            & external key store was not \\
+                            & (Cryptographic operations)          & found in its external HSM. If \\
+                            &                                     & the external key ID associated \\
+                            &                                     & with this KMS key is incorrect, \\
+                            &                                     & create a new KMS key with the \\
+                            &                                     & correct external key ID. \\
       \hline
     \end{tabular}
   \end{center}
@@ -742,23 +738,39 @@ AuthenticationFailedException  & CredentialException              & rejected the
 \begin{table}[h!]
   \begin{center}
     \begin{tabular}{l l l}
-      \hline
+      \hline \hline
                            & \textbf{KMS Exception}   &  \textbf{KMS Exception}\\
       \textbf{Failure Scenario}   & \textbf{(KMS Operation)} &  \textbf{Message} \\
+      \hline \hline
+      Proxy returns an      & XksProxyInvalidConfigurationException & The external key store proxy \\
+   InvalidUriPathException  & (Create/UpdateCustomKeyStore)       & rejected the request because \\
+                            & CustomKeyStoreInvalidStateException & of an invalid URI path. Verify \\
+                            & (CreateKey)                         & the URI path for your external \\
+                            & KMSInvalidStateException            & key store and update if \\
+                            & (Cryptographic operations)          & necessary. \\
+      \hline
+      Proxy returns an      & XksKeyInvalidResponseException      & The external key store proxy \\
+ UnsupportedOperationException & (CreateKey)                      & rejected the request because \\
+                            & KMSInvalidStateException            & it does not support the \\
+                            & (Cryptographic operations)          & requested operation. If you \\
+                            &                                     & see this error repeatedly, \\
+                            &                                     & report it to your external \\
+                            &                                     & key store proxy administrator.\\
       \hline
       Proxy returns a       & XksProxyUriUnreachableException     & The external key store proxy \\
- DependencyTimeoutException & (Create/UpdateCustomKeyStore)       & timed out while trying to \\
-                            & CustomKeyStoreInvalidStateException & fulfill the request. \\
-                            & (CreateKey)                         & \\
-                            & KMSInvalidStateException            & \\
-                            & (Cryptographic operations)          & \\                          
+ DependencyTimeoutException & (Create/UpdateCustomKeyStore)       & did not respond to the request \\
+                            & CustomKeyStoreInvalidStateException & in the time allotted. Retry \\
+                            & (CreateKey)                         & the request. If you see this \\
+                            & KMSInvalidStateException            & error repeatedly, report it \\
+                            & (Cryptographic operations)          & to your external key store \\
+                            &                                     & proxy administrator. \\
       \hline
       Proxy returns a       & XksProxyUriUnreachableException     & The external key store proxy \\
  ThrottlingException        & (Create/UpdateCustomKeyStore)       & rejected the request due to \\
                             & CustomKeyStoreInvalidStateException & a very high request rate. \\
-                            & (CreateKey)                         & Reduce your call rate and \\
-                            & KMSInvalidStateException            & retry the request. \\
-                            & (Cryptographic operations)          & \\
+                            & (CreateKey)                         & Reduce the frequency of your \\
+                            & KMSInvalidStateException            & calls using KMS keys in this \\
+                            & (Cryptographic operations)          & external key store. \\
       \hline
       Proxy returns         & XksProxyInvalidResponseException    & The external key store proxy \\
       an InternalException  & (Create/UpdateCustomKeyStore)       & rejected the request because \\
@@ -769,40 +781,57 @@ AuthenticationFailedException  & CredentialException              & rejected the
                             &                                     & that the external HSM is \\
                             &                                     & available. \\
       \hline
-     KMS cannot establish   & XksProxyUriUnreachableException     & AWS KMS cannot communicate with \\
-     a TCP connection       & (Create/UpdateCustomKeyStore)       & the external key store proxy. \\
-                            & CustomKeyStoreInvalidStateException & Verify that your external key \\
-                            & (CreateKey)                         & proxy is active and is connected \\
-                            & KMSInvalidStateException            & to the network, and that its URI \\
-                            & (Cryptographic operations)          & path and endpoint URI or VPC \\
-                            &                                     & service name are correct in your \\
-                            &                                     & external key store. \\
+     AWS KMS cannot establish   & XksProxyUriUnreachableException     & AWS KMS cannot communicate  \\
+     a TCP connection       & (Create/UpdateCustomKeyStore)       & with the external key store \\
+                            & CustomKeyStoreInvalidStateException & proxy. This might be a transient \\
+                            & (CreateKey)                         & network issue. If you see this \\
+                            & KMSInvalidStateException            & error repeatedly, verify that \\
+                            & (Cryptographic operations)          & your external key store proxy \\
+                            &                                     & is active and is connected to \\
+                            &                                     & the network, and that its \\
+                            &                                     & endpoint URI is correct in your \\
+                            &                                     & external keystore. \\
       \hline
-     KMS cannot establish   & XksProxyUriUnreachableException     & AWS KMS cannot establish a TLS \\
-     a TLS connection       & (Create/UpdateCustomKeyStore)       & connection to the external key \\
-                            & CustomKeyStoreInvalidStateException & store proxy. Verify the TLS \\
-                            & (CreateKey)                         & configuration, including its \\
-                            & KMSInvalidStateException            & certificate. \\
+     AWS KMS cannot establish   & XksProxyUriUnreachableException     & AWS KMS cannot establish a \\
+     a TLS connection       & (Create/UpdateCustomKeyStore)       & TLS connection to the external \\
+                            & CustomKeyStoreInvalidStateException & key store proxy. Verify the \\
+                            & (CreateKey)                         & TLS configuration, including \\
+                            & KMSInvalidStateException            & its certificate. \\
                             & (Cryptographic operations)          & \\ 
       \hline
-     KMS encounters a       & XksProxyUriUnreachableException     & AWS KMS rejected the request \\
-     socket timeout         & (Create/UpdateCustomKeyStore)       & because the external key store \\
+    \end{tabular}
+  \end{center}
+\end{table}
+
+\pagebreak
+
+\begin{table}[h!]
+  \begin{center}
+    \begin{tabular}{l l l}
+      \hline \hline
+                           & \textbf{KMS Exception}   &  \textbf{KMS Exception}\\
+      \textbf{Failure Scenario}   & \textbf{(KMS Operation)} &  \textbf{Message} \\
+      \hline \hline
+     AWS KMS encounters     & XksProxyUriUnreachableException     & AWS KMS rejected the request \\
+     a socket timeout       & (Create/UpdateCustomKeyStore)       & because the external key store \\
                             & CustomKeyStoreInvalidStateException & proxy did not respond in time. \\
-                            & (CreateKey)                         & \\
-                            & KMSInvalidStateException            & \\
-                            & (Cryptographic operations)          & \\ 
+                            & (CreateKey)                         & Retry the request. If you see \\
+                            & KMSInvalidStateException            & this error repeatedly, report \\
+                            & (Cryptographic operations)          & it to your external key store \\
+                            &                                     & proxy administrator. \\
       \hline
      Proxy returns          & XksProxyInvalidResponseException    & AWS KMS cannot interpret the \\
      a malformed response   & (Create/UpdateCustomKeyStore)       & response from the external \\
                             & CustomKeyStoreInvalidStateException & key store proxy. If you see \\
                             & (CreateKey)                         & this error repeatedly, report \\
-                            & KMSInvalidStateException            & it to the vendor of your \\
-                            & (Cryptographic operations)          & external key store proxy. \\
+                            & KMSInvalidStateException            & it to your external key store\\
+                            & (Cryptographic operations)          & proxy administrator. \\
       \hline
-    Custom key store is     & CustomKeyStoreInvalidStateException & This KMS key is in a custom key \\
-    not in CONNECTED        & (CreateKey)                         & store that is not connected \\
-    state                   & KMSInvalidStateException            & to its external key store \\
-                            & (Cryptographic operations)          & proxy.  \\
+    Custom key store is     & CustomKeyStoreInvalidStateException & This KMS key is in a custom \\
+    not in CONNECTED        & (CreateKey)                         & key store that is not connected \\
+    state                   & KMSInvalidStateException            & to its external key store proxy.\\
+                            & (Cryptographic operations)          & Connect the external key store \\
+                            &                                     & and try the request again. \\
       \hline
     \end{tabular}
   \end{center}
@@ -956,7 +985,7 @@ Besides signature verification, the XKS Proxy MUST also ensure that the timestam
 
 ## Appendix B: RequestMetadata Fields {#appendix-b}
 
-The sections on individual XKS proxy APIs define which fields are included as part of the `requestMetadata`. Over time, AWS KMS may choose to include additional fields such as [SourceIdentity](https://aws.amazon.com/blogs/security/how-to-relate-iam-role-activity-to-corporate-identity/) and tags associated with the AWS principal and KMS key.
+The sections on individual XKS proxy APIs define which fields are included as part of the `requestMetadata`. Over time, AWS KMS may choose to include additional fields such as [`SourceIdentity`](https://aws.amazon.com/blogs/security/how-to-relate-iam-role-activity-to-corporate-identity/), `kmsRecipientAttestationImage Sha384`, `kmsRecipientAttestationPCR<PCR_ID>` (as described in [AWS KMS condition keys for AWS Nitro Enclaves](https://docs.aws.amazon.com/kms/latest/developerguide/policy-conditions.html#conditions-nitro-enclaves)) and tags associated with the AWS principal and KMS key.
 
 Secondary authorization is an optional feature for XKS proxies. XKS proxy vendors have the flexibility to define the policy language used to express access control rules and the `requestMetadata` fields that can be used in access control policies.
 
@@ -1167,22 +1196,22 @@ Collecting GetHealthStatus metrics ...
 
 ## Appendix E: Change Log {#appendix-e}
 
-* Version 1: Based on Aviral’s internal doc. Mainly added use of RFC 2119 terminology and best practices guidance using SHOULDs, e.g. on separating keys using domains within the external key managers, marking them non-exportable etc
-* Version 2: Incorporated feedback from Ken and vendor partner. Removed key lifecycle APIs from Faythe interface. Replaced External HSM with External Key Manager. Used standard error codes between Faythe and the XKS Proxy Management Fleet (we can still convert them before exposing them to KMS API caller). Message body is used for additional disambiguation/finer granularity in describing the error.
-* Version 3 (Jul 30, 2021): Added notes to suggest the message signing mechanism is under review.
-* Version 4 (Aug 16, 2021): Finalized AWS SIGv4 as the mechanism for signing Faythe API requests. Changed terminology from External Key Manager (EKM) to External Key Store. Added more fields in requestMetadata. Updated error codes. Changed GETs to POSTs.
-* Version 5 (Sep 7, 2021): Added back support for Faythe proxy running in a customer’s VPC (on a non-publicly routable endpoint) in the architecture diagram.
-* Version 6 (Sep 22, 2021): Added Appendix A on special considerations for using SigV4 in the context of this document and Appendix B on open questions. Updated terminology, e.g. replaced KMS internal fleet names with external names, Faythe is now the External Key Store Proxy or XKS Proxy, replaced eks in the URLs with xks, Replaced EncryptionContext with a generic AdditionalAuthenticatedData (AAD) field which simplifies the XKS Proxy implementation (because it no longer needs to worry about canonicalizing a set of key-value pairs) and allows KMS to include additional data, such as the proprietary ciphertext blob header,  in the AAD.
-* Version 7 (Sep 28, 2021): Relaxed the constraint on API endpoint to include a path-prefix, i.e. the endpoint can look like `https://<server>:<port>/<path-prefix>/kms/xks/v1`, as opposed to  
+* Version 0.0.1: Based on Aviral’s internal doc. Mainly added use of RFC 2119 terminology and best practices guidance using SHOULDs, e.g. on separating keys using domains within the external key managers, marking them non-exportable etc
+* Version 0.0.2: Incorporated feedback from Ken and vendor partner. Removed key lifecycle APIs from Faythe interface. Replaced External HSM with External Key Manager. Used standard error codes between Faythe and the XKS Proxy Management Fleet (we can still convert them before exposing them to KMS API caller). Message body is used for additional disambiguation/finer granularity in describing the error.
+* Version 0.0.3 (Jul 30, 2021): Added notes to suggest the message signing mechanism is under review.
+* Version 0.0.4 (Aug 16, 2021): Finalized AWS SIGv4 as the mechanism for signing Faythe API requests. Changed terminology from External Key Manager (EKM) to External Key Store. Added more fields in requestMetadata. Updated error codes. Changed GETs to POSTs.
+* Version 0.0.5 (Sep 7, 2021): Added back support for Faythe proxy running in a customer’s VPC (on a non-publicly routable endpoint) in the architecture diagram.
+* Version 0.0.6 (Sep 22, 2021): Added Appendix A on special considerations for using SigV4 in the context of this document and Appendix B on open questions. Updated terminology, e.g. replaced KMS internal fleet names with external names, Faythe is now the External Key Store Proxy or XKS Proxy, replaced eks in the URLs with xks, Replaced EncryptionContext with a generic AdditionalAuthenticatedData (AAD) field which simplifies the XKS Proxy implementation (because it no longer needs to worry about canonicalizing a set of key-value pairs) and allows KMS to include additional data, such as the proprietary ciphertext blob header,  in the AAD.
+* Version 0.0.7 (Sep 28, 2021): Relaxed the constraint on API endpoint to include a path-prefix, i.e. the endpoint can look like `https://<server>:<port>/<path-prefix>/kms/xks/v1`, as opposed to
 `https://<server>:<port>/kms/xks/v1.` Specified the set of allowed characters in an external key Id: uppercase or lowercase letters A through Z, digits 0 through 9 and the hyphen. Also added guidance on ensuring the secrets used for SigV4 verification are adequately protected.
-* Version 8 (Oct 11, 2021): Updated high-level architecture diagram to eliminate the middle option since it was equivalent to the third option from a connectivity perspective. Clarified what error is thrown (IncorrectKeyException) if the externalKeyId passed to an API call for v1 corresponds to a key with a type other than AES-256. **Removed the `<path-prefix>` from the endpoint URI because having that flexibility for the VPC-connectivity option introduces more complexity on the KMS API (this reverts a change that was introduced in Version 7).** Clarified that requests with a timestamp not within 5 minutes of the proxy’s timestamp should fail authentication. Updated ErrorMessage strings. Added a new error InvalidKeyUsageException which is thrown if the AES encrypt/decrypt operation is invoked on a key mean for different usage, e.g. for HMAC or asymmetric Sign/Verify. Removed the IncorrectKeyException for Decrypt because the operation cannot distinguish between IncorrectKeyException and IncorrectCiphertextException (look for strikethrough text in the Errors table).
-* Version 9 (Oct 27, 2021): Re-introduced path-prefix in the XKS proxy endpoint, the endpoint can look like `https://<server>:<port>/<path-prefix>/kms/xks/v1`, as opposed to  
+* Version 0.0.8 (Oct 11, 2021): Updated high-level architecture diagram to eliminate the middle option since it was equivalent to the third option from a connectivity perspective. Clarified what error is thrown (IncorrectKeyException) if the externalKeyId passed to an API call for v1 corresponds to a key with a type other than AES-256. **Removed the `<path-prefix>` from the endpoint URI because having that flexibility for the VPC-connectivity option introduces more complexity on the KMS API (this reverts a change that was introduced in Version 7).** Clarified that requests with a timestamp not within 5 minutes of the proxy’s timestamp should fail authentication. Updated ErrorMessage strings. Added a new error InvalidKeyUsageException which is thrown if the AES encrypt/decrypt operation is invoked on a key mean for different usage, e.g. for HMAC or asymmetric Sign/Verify. Removed the IncorrectKeyException for Decrypt because the operation cannot distinguish between IncorrectKeyException and IncorrectCiphertextException (look for strikethrough text in the Errors table).
+* Version 0.0.9 (Oct 27, 2021): Re-introduced path-prefix in the XKS proxy endpoint, the endpoint can look like `https://<server>:<port>/<path-prefix>/kms/xks/v1`, as opposed to
 `https://<server>:<port>/kms/xks/v1`.  Expanded the GetHealthStatus response to include information on multiple HSMs in a cluster. The additional information can be used by AWS KMS to process TPS limit increase requests from customers. Clarified that the proxy may create test keys (but not keys associated with KMS keys) and invoke cryptographic operation on them as part of a deep healthcheck. Clarified that this API MUST be excluded from authorization on the XKS Proxy.
-* Version 10 (Nov 12, 2021): Mentioned the possibility of including KMS condition keys for AWS Nitro Enclaves in requestMetadata. Specified size of IV must be exactly 96 bits. Updated the description of plaintext and ciphertext for both Encrypt and Decrypt APIs to clarify the size of the the input the XKS Proxy must accept and the 20-byte limit on extra bytes it may add during encrypt. Added requirement on XKS Proxy to support up to 8192 bytes of AAD. Added the ability to request a Ciphertext Data Integrity Value (CDIV) in the Encrypt API. Added an example in the Encrypt API description illustrating CDIV computation. Removed authentication mechanism between KMS and XKS Proxy from the list of Open Issues: we are moving forward with a combination of TLS server-side authentication (for authenticating the XKS Proxy to KMS) and SigV4 (for authenticating KMS to the XKS Proxy).
+* Version 0.0.10 (Nov 12, 2021): Mentioned the possibility of including KMS condition keys for AWS Nitro Enclaves in requestMetadata. Specified size of IV must be exactly 96 bits. Updated the description of plaintext and ciphertext for both Encrypt and Decrypt APIs to clarify the size of the the input the XKS Proxy must accept and the 20-byte limit on extra bytes it may add during encrypt. Added requirement on XKS Proxy to support up to 8192 bytes of AAD. Added the ability to request a Ciphertext Data Integrity Value (CDIV) in the Encrypt API. Added an example in the Encrypt API description illustrating CDIV computation. Removed authentication mechanism between KMS and XKS Proxy from the list of Open Issues: we are moving forward with a combination of TLS server-side authentication (for authenticating the XKS Proxy to KMS) and SigV4 (for authenticating KMS to the XKS Proxy).
 
 \pagebreak
 
-* Version 11 (Jan 3, 2021): This version incorporates a number of recommendations received from internal and external feedback providers
+* Version 0.0.11 (Jan 3, 2021): This version incorporates a number of recommendations received from internal and external feedback providers
     * End GetKeyMetadata endpoint in “metadata” for consistency with other APIs
     * Allow the IV to be either 12 or 16 bytes
     * Rename keyState in GetKeyMetadata response to keyStatus to distinguish it from KMS keyState
@@ -1194,13 +1223,13 @@ Collecting GetHealthStatus metrics ...
     * Remove IncorrectKeyException
     * Allow underscore as a valid character in the externalKeyId
     * Called out HTTP/1.1 or later and TLS 1.2 or later with specific cipher suites providing perfect forward secrecy.
-* Version 12 (Feb 02, 2022): Updated the description for the keyArn field in request metadata associated with the GetKeyMetadata API (it is no longer REQUIRED, KMS will include it when the kmsOperation is DescribeKey but not for CreateKey). Added GetHealthStatus as one of the APIs that can throw an InvalidStateException.
-* Version 13 (Feb 28, 2022): This version incorporates the following changes: 
+* Version 0.0.12 (Feb 02, 2022): Updated the description for the keyArn field in request metadata associated with the GetKeyMetadata API (it is no longer REQUIRED, KMS will include it when the kmsOperation is DescribeKey but not for CreateKey). Added GetHealthStatus as one of the APIs that can throw an InvalidStateException.
+* Version 0.0.13 (Feb 28, 2022): This version incorporates the following changes:
     * Changed wording in the description of the two ways in which the XKS Proxy service is exposed to KMS. Previous wording suggested that exposing the service as a VPC endpoint service requires the XKS proxy to be in the customer’s Amazon VPC. This is not the case. The customer just needs an NLB in their VPC. The NLB can be configured to use private IP addresses in its target group. Those IP addresses can be in the customer’s data center as long as those IP addresses are reachable from the VPC. 
     * Clarified that kmsRequestId is part of the requestMetadata accompanying a GetHealthStatus request only if the request is made as part of the KMS CreateCustomKeyStore or ConnectCustomKeyStore API
     * Added InvalidUriPathException (HTTP Code 404) for situations where the XKS Proxy receives a request with an invalid URI path.
     * Added Appendix B with guidelines on CDIV implementation.
-* Version 14 (Mar 31, 2022): 
+* Version 0.0.14 (Mar 31, 2022):
     * Updated URIs everywhere to show optional portions in square brackets.
     * Added a section on “Other Considerations” that talks about load balancer health checks an XKS Proxy must implement.
     * Clarified that the secret_access_key can be any UTF-8 string with sufficient entropy and Base64 encoding a 32-byte random value is just one of the possible ways of generating a good secret_access_key. Also mentioned the list of characters allowed in the secret_access_key.
@@ -1209,10 +1238,10 @@ Collecting GetHealthStatus metrics ...
     * Clarified that GetHealthStatus MUST not return more than ten entries for ekmFleetDetails
     * Removed all mention of CDIV. For the foreseeable future, KMS will handle this internally and we can simplify the specification and make it easier to implement. When we reintroduce CDIV, we will require the XKS Proxy to include the complete AAD in the CDIV computation along with the ciphertextMetadata, IV, ciphertext and authentication tag.
     * Added this text for every description of kmsOperation: “The XKS Proxy MUST NOT reject a request as invalid if it sees a kmsOperation other than those listed for this API call.” See the kmsOperation description in GetKeyMetadata for justification.
-* Version 15 (Apr 06, 2022):
+* Version 0.0.15 (Apr 06, 2022):
     * Changed requestMetadata specification for GetHealthStatus to always include a requestId and kmsOperation.
     * Updated Error Code list to clarify InvalidStateException can be returned for all APIs.
-* Version 16 (Jun 23, 2022):
+* Version 0.0.16 (Jun 23, 2022):
     * Reintroduced CiphertextDataIntegrityValue (CDIV) and included AAD into the CDIV computation. Added Appendix C with CDIV computation guidelines.
     * Added new architecture diagram showing VPC endpoint connectivity with XKS proxy in and outside the AWS data center.
     * Removed optional port in URIs since KMS APIs require the proxy to run on the default HTTPS port.
@@ -1220,22 +1249,27 @@ Collecting GetHealthStatus metrics ...
     * Mentioned 500ms KMS timeout and how the proxy may use caching of the deep health check result to meet this constraint.
     * Added a description of the XKS Proxy configuration file under Other Considerations
     * Added a recommendation for the XKS Proxy to support client-side TLS authentication.
-* Version 17 (Jul 15, 2022):
+* Version 0.0.17 (Jul 15, 2022):
     * Remove error messages from the JSON payload in error responses from the proxy since KMS is ignoring them.
     * Added a table under KMS Considerations for Error Codes indicating the specific KMS exceptions and messages returned to the KMS caller when the XKS proxy reports an error.
     * Added guidance on including the length of the ciphertext metadata before including it in the AAD input for the external HSM.
-* Version 18 (Aug 2, 2022):
+* Version 0.0.18 (Aug 2, 2022):
     * Added clarifying text in multiple places: separated out recommended TLS cipher suites by TLS version, replaced Base-64 and base64 references with Base64 for consistency, mentioned that XKS proxy must be able to fall back to HTTP 1.1.
     * Recommended including the length of both the `additionalAuthenticatedData` and `ciphertextMetadata` when creating the AAD for the external HSM
     * Reworded Appendix B to suggest KMS may expand `requestMetadata` fields in the future but each XKS proxy vendor can define their own policy language and choose which of those fields are usable in access control decisions.
-* Version 19 (Aug 3, 2022):
+* Version 0.0.19 (Aug 3, 2022):
     * Fix typo in KMS Exception Message.
-* Version 20 (Aug 3, 2022):
+* Version 0.0.20 (Aug 3, 2022):
     * Clarify the endianness of the 2-byte AAD length in constructing the AAD input of AES/GCM to the external HSM.
-* Version 21 (Aug 16, 2022):
+* Version 0.0.21 (Aug 16, 2022):
     * Added a new section on Troubleshooting using curl under Other Considerations.
     * Added a new subsection under Authentication describing how an XKS proxy should support rotation of SigV4 credentials.
     * Changed 500ms KMS timeout threshold to 250ms and the ping latency between customer data center and AWS data center to be 35ms (down from 100ms).
-* Version 22 (Aug 19, 2022):
+* Version 0.0.22 (Aug 19, 2022):
     * Changed how KMS reports access denied and invalid ciphertext errors from the proxy, both of these are now reported as KMSInvalidStateException.
     * Added a new entry for ThrottlingException in the error codes section. This provides a mechanism for the proxy to implement back pressure on a caller when the request rate is too high. Added a corresponding entry in the table of KMS exceptions. Mentioned that an XKS proxy may implement independent request quotas on each path prefix and respond with a ThrottlingException if that quota is exceeded.
+ * Version 0.9.6 (Sep 12, 2022):
+    * The XKS proxy may include an optional errorMessage in the JSON body when reporting an API failure.
+    * Updated the text of error messages KMS reports to its callers for various exceptions.
+    * Renumbered pre-GitHub version numbers, e.g. pre-GitHub version number X was renumbered 0.0.X. The jump in version number reflects we are getting close to finalizing v1 of the XKS Proxy API specification.
+
