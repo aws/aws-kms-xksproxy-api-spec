@@ -1272,3 +1272,4 @@ Collecting GetHealthStatus metrics ...
     * The XKS proxy may include an optional errorMessage in the JSON body when reporting an API failure.
     * Updated the text of error messages KMS reports to its callers for various exceptions.
     * Renumbered pre-GitHub version numbers, e.g. pre-GitHub version number X was renumbered 0.0.X. The jump in version number reflects we are getting close to finalizing v1 of the XKS Proxy API specification.
+
