@@ -11,7 +11,7 @@
 
 Refer to the Change Log in [Appendix E](#appendix-e) for a history of the changes.
 
-*Last Updated: Sep 12, 2022*
+*Last Updated: Oct 10, 2022*
 
 ## Background
 
@@ -98,7 +98,7 @@ The XKS APIs involving an external key (encrypt, decrypt, getKeyMetadata) use UR
 
 The **`<server>`** MUST be a fully qualified domain name (rather than an IP address) and the total URI length MUST NOT exceed 256 characters. The **`externalKeyId`** identifies a key in the external key manager and must be unique within the scope of an XKS Proxy endpoint. Each KMS key must be associated with a different external key, i.e. two different KMS keys created in the same external key store (identified by the XKS Proxy endpoint) MUST NOT have the same **`externalKeyId`**. If you try to create a KMS key with an **`externalKeyId`**  that is already associated with an existing KMS key, the CreateKey request will fail.
 
-The encoding of **`externalKeyId`** is opaque to AWS KMS. The only requirements are: (i) the XKS Proxy MUST be able to identify an external key unambiguously from its **`externalKeyId`**, (ii) the length of an **`externalKeyId`** MUST NOT exceed 128 characters and they MUST be restricted to the following set: uppercase or lowercase letters A through Z, the digits 0 through 9, the hyphen and the underscore.
+The encoding of **`externalKeyId`** is opaque to AWS KMS. The only requirements are: (i) the XKS Proxy MUST be able to identify an external key unambiguously from its **`externalKeyId`**, (ii) the length of an **`externalKeyId`** MUST NOT exceed 128 characters and they MUST be restricted to the following set: uppercase or lowercase letters A through Z, the digits 0 through 9, the hyphen, the period and the underscore.
 
 
 \pagebreak
@@ -1272,4 +1272,5 @@ Collecting GetHealthStatus metrics ...
     * The XKS proxy may include an optional errorMessage in the JSON body when reporting an API failure.
     * Updated the text of error messages KMS reports to its callers for various exceptions.
     * Renumbered pre-GitHub version numbers, e.g. pre-GitHub version number X was renumbered 0.0.X. The jump in version number reflects we are getting close to finalizing v1 of the XKS Proxy API specification.
-
+ * Version 0.9.7 (Oct 10, 2022):
+    * Allow period as a valid character in the `externalKeyId`.
