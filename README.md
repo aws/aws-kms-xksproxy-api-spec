@@ -1,3 +1,5 @@
+![](https://github.com/aws/aws-kms-xksproxy-api-spec/actions/workflows/ci.yml/badge.svg)
+
 ## AWS KMS External Keystore (XKS) Proxy API Specification
 
 This repository contains the AWS KMS External Keystore (XKS) Proxy API Specification in markdown format, which can be used to generate a PDF file via [pandoc](https://pandoc.org/).

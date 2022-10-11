@@ -1,0 +1,29 @@
+name: Continuous Integration
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  convert_via_pandoc:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Install xelatex
+        run: sudo apt install texlive-xetex
+
+      - name: Install pandoc
+        run: sudo apt-get install pandoc
+
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Convert to pdf
+        run: make
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: aws-kms-xksproxy-api-spec
+          path: ./build/*.pdf
