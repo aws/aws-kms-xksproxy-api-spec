@@ -1,7 +1,7 @@
 # Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 # SPDX-License-Identifier: MIT-0
 NAME    := aws-kms-xksproxy-api-spec
-VERSION := 0.9.6
+VERSION := 0.9.7
 RELEASE := 0
 SOURCE_BUNDLE := $(NAME)-$(VERSION)-$(RELEASE).txz
 PDF := $(NAME)-$(VERSION).pdf
