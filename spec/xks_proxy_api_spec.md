@@ -587,6 +587,8 @@ We use standard HTTP error codes but leverage the HTTP body for disambiguation/a
 | 501        | UnsupportedOperationException | The request was rejected because the<br>specified cryptographic operation is not<br>implemented, or if a parameter value<br>exceeded the maximum size that is<br>currently supported by a specific<br>implementation beyond the minimize size<br>required by this API specification. | ALL                           |
 | 503        | DependencyTimeoutException    | The XKS proxy timed out while trying to<br>access a dependency layer to fulfill the<br>request.                                                                                                                                                                                      | ALL                           |
 | 500        | InternalException             | This is a generic server error. For example,<br>this exception is thrown due to failure of<br>the backing HSM, or failure of a<br>dependency layer.                                                                                                                                  | ALL                           |
+
+
 \pagebreak
 
 **Example:**
