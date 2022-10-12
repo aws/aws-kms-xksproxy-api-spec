@@ -573,71 +573,20 @@ We use standard HTTP error codes but leverage the HTTP body for disambiguation/a
 
 \pagebreak
 
-\begin{table}[h!]
-  \begin{center}
-    \begin{tabular}{l l l l}
-      \hline
-      \textbf{Error} &                     &                         & XKS proxy \\
-      \textbf{Code}  & \textbf{Error Name} & \textbf{Error Scenario} & APIs \\
-      \hline
-      400        & ValidationException           & The request was rejected because one         & ALL except \\
-                 &                               & or more input parameters is invalid.         & GetHealthStatus \\
-                 \\
-      400        & InvalidStateException         & The request was rejected because the         & ALL \\
-                 &                               & specified external key or key store is \\
-                 &                               & disabled/deactivated/blocked. \\
-                 \\
-      400        & InvalidCiphertextException    & The request was rejected because the         & Decrypt \\
-                 &                               & specified ciphertext, initialization vector, \\
-                 &                               & additional authenticated data or \\
-                 &                               & authentication tag is corrupted, missing, \\
-                 &                               & or otherwise invalid. \\
-                 \\
-      400        & InvalidKeyUsageException      & The request was rejected because the         & Decrypt, \\
-                 &                               & specified key does not support the           & Encrypt \\
-                 &                               & requested operation. \\
-                 \\
-      401        & AuthenticationFailedException & The request was rejected due to              & ALL \\
-                 &                               & invalid AWS SigV4 signature. \\
-                 \\
-      403        & AccessDeniedException         & The request was rejected because the         & ALL except \\
-                 &                               & operation is not authorized based on         & GetHealthStatus \\
-                 &                               & request metadata. \\
-                 \\
-      404        & KeyNotFoundException          & The request was rejected because the         & ALL except \\
-                 &                               & specified external key is not found.         & GetHealthStatus \\
-                 \\
-      404        & InvalidUriPathException       & The request was rejected because the         & ALL \\
-                 &                               & specified URI path is not valid. \\
-                 \\
-      429        & ThrottlingException           & The request was rejected because the         & ALL \\
-                 &                               & request rate is too high. The  \\
-                 &                               & proxy may send this either because \\
-                 &                               & it is unable to keep up or the caller \\
-                 &                               & exceeded its request quota. \\
-                 &                               &  \\
-                 \\
-      501        & UnsupportedOperationException & The request was rejected because the          & ALL \\
-                 &                               & specified cryptographic operation is not \\
-                 &                               & implemented, or if a parameter value \\
-                 &                               & exceeded the maximum size that is \\
-                 &                               & currently supported by a specific \\
-                 &                               & implementation beyond the minimize size \\
-                 &                               & required by this API specification. \\
-                 \\
-      503        & DependencyTimeoutException    & The XKS proxy timed out while trying to       & ALL \\
-                 &                               & access a dependency layer to fulfill the \\
-                 &                               & request. \\
-                 \\
-      500        & InternalException             & This is a generic server error. For example,  & ALL \\
-                 &                               & this exception is thrown due to failure of \\
-                 &                               & the backing HSM, or failure of a \\
-                 &                               & dependency layer. \\
-      \hline
-    \end{tabular}
-  \end{center}
-\end{table}
-
+| Error Code | Error Name                    | Error Scenario                                                                                                                                                                                                                                                                       | XKS proxy <br>APIs            |
+|------------|-------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------|
+| 400        | ValidationException           | The request was rejected because one<br>or more input parameters is invalid.                                                                                                                                                                                                         | ALL except<br>GetHealthStatus |
+| 400        | InvalidStateException         | The request was rejected because the<br>specified external key or key store is<br>disabled/deactivated/blocked.                                                                                                                                                                      | ALL                           |
+| 400        | InvalidCiphertextException    | The request was rejected because the<br>specified ciphertext, initialization vector,<br>additional authenticated data or<br>authentication tag is corrupted, missing,<br>or otherwise invalid.                                                                                       | Decrypt                       |
+| 400        | InvalidKeyUsageException      | The request was rejected because the<br>specified key does not support the<br>requested operation.                                                                                                                                                                                   | Decrypt,<br>Encrypt           |
+| 401        | AuthenticationFailedException | The request was rejected due to<br>invalid AWS SigV4 signature.                                                                                                                                                                                                                      | ALL                           |
+| 403        | AccessDeniedException         | The request was rejected because the<br>operation is not authorized based on<br>request metadata.                                                                                                                                                                                    | ALL except<br>GetHealthStatus |
+| 404        | KeyNotFoundException          | The request was rejected because the<br>specified external key is not found.                                                                                                                                                                                                         | ALL except<br>GetHealthStatus |
+| 404        | InvalidUriPathException       | The request was rejected because the<br>specified URI path is not valid.                                                                                                                                                                                                             | ALL                           |
+| 429        | ThrottlingException           | The request was rejected because the<br>request rate is too high. The<br>proxy may send this either because<br>it is unable to keep up or the caller<br>exceeded its request quota.                                                                                                  | ALL                           |
+| 501        | UnsupportedOperationException | The request was rejected because the<br>specified cryptographic operation is not<br>implemented, or if a parameter value<br>exceeded the maximum size that is<br>currently supported by a specific<br>implementation beyond the minimize size<br>required by this API specification. | ALL                           |
+| 503        | DependencyTimeoutException    | The XKS proxy timed out while trying to<br>access a dependency layer to fulfill the<br>request.                                                                                                                                                                                      | ALL                           |
+| 500        | InternalException             | This is a generic server error. For example,<br>this exception is thrown due to failure of<br>the backing HSM, or failure of a<br>dependency layer.                                                                                                                                  | ALL                           |
 \pagebreak
 
 **Example:**
