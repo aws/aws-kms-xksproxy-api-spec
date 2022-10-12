@@ -9,7 +9,7 @@
 
 >**This information is AWS confidential and is being shared under a Non Disclosure Agreement. The API interface described in this document is subject to change.**
 
-Refer to the Change Log in [Appendix E](#appendix-e:-change-log) for a history of the changes.
+Refer to the Change Log in [Appendix E](#appendix-e-change-log) for a history of the changes.
 
 *Last Updated: Oct 12, 2022*
 
