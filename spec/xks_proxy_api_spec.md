@@ -614,179 +614,27 @@ If an XKS proxy returns an HTTP error code without a JSON-formatted body or any 
 
 \pagebreak
 
-\begin{table}[h!]
-  \begin{center}
-    \begin{tabular}{l l l}
-      \hline \hline
-                           & \textbf{KMS Exception}   &  \textbf{KMS Exception}\\
-      \textbf{Failure Scenario}   & \textbf{(KMS Operation)} &  \textbf{Message} \\
-      \hline \hline
-      Proxy returns a      & XksProxyInvalidResponseException     & AWS KMS cannot interpret the \\ 
-      ValidationException  & (Create/UpdateCustomKeyStore)        & response from the external \\
-                           & CustomKeyStoreInvalidStateException  & key store proxy. If you see \\
-                           & (CreateKey)                          & this error repeatedly, report \\  
-                           & KMSInvalidStateException             & it to your external key store \\
-                           & (Cryptographic operations)           & proxy administrator. \\
-      \hline
-      Proxy returns an      & XksKeyInvalidConfigurationException & The external key associated \\
-      InvalidStateException & (CreateKey)                         & with this KMS key in an \\
-                            & KMSInvalidStateException            & external key store is not \\
-                            & (Cryptographic operations)          & enabled in the external HSM. \\
-                            &                                     & Enable the external key in \\
-                            &                                     & the external HSM and retry \\
-                            &                                     & the request. \\
-      \hline
-      Proxy returns an      & KMSInvalidStateException            & The external key store proxy \\
-InvalidCiphertextException  & (Decrypt, ReEncrypt)                & rejected the request because \\
-                            &                                     & the specified ciphertext or \\
-                            &                                     & encryption context is corrupted, \\
-                            &                                     & missing, or otherwise invalid. \\
-      \hline
-      Proxy returns an      & KMSInvalidStateException            & The ciphertext that the external \\
-invalid ciphertext          & (Decrypt, ReEncrypt)                & key store proxy submitted for \\
-                            &                                     & decryption, or the encryption \\
-                            &                                     & context, is corrupted, missing, \\
-                            &                                     & or otherwise invalid. \\
-      \hline
-      Proxy returns an      & XksKeyInvalidConfigurationException & The external key associated  \\
-InvalidKeyUsageException    & (CreateKey)                         & with this KMS key in an  \\
-                            & KMSInvalidStateException            & external key store does not \\
-                            & (Cryptographic operations)          & support the requested operation. \\
-                            &                                     & Enable the operation on the \\
-                            &                                     & key in your external HSM,\\
-                            &                                     & and try the request again. \\
-      \hline
-      Proxy returns an      & XksProxyIncorrectAuthentication     & The external key store proxy \\
-AuthenticationFailedException  & CredentialException              & rejected the request because \\
-                            & (Create/UpdateCustomKeyStore)       & it could not authenticate AWS \\
-                            & CustomKeyStoreInvalidStateException & KMS. Verify the XKS proxy \\
-                            & (CreateKey)                         & authentication credentials for \\
-                            & KMSInvalidStateException            & your external key store and \\
-                            & (Cryptographic operations)          & update if necessary. \\
-      \hline
-      Proxy returns an      & KMSInvalidStateException            & The external key store proxy \\
-    AccessDeniedException   & (CreateKey, Crypto operations)      & denied access to the operation. \\
-                            &                                     & Verify that the user and the\\
-                            &                                     & external key are both \\
-                            &                                     & authorized for this operation, \\
-                            &                                     & and try the request again. \\
-      \hline
-      Proxy returns a       & XksKeyNotFoundException             & The external key associated \\
-    KeyNotFoundException    & (CreateKey)                         & with this KMS key in an \\
-                            & KMSInvalidStateException            & external key store was not \\
-                            & (Cryptographic operations)          & found in its external HSM. If \\
-                            &                                     & the external key ID associated \\
-                            &                                     & with this KMS key is incorrect, \\
-                            &                                     & create a new KMS key with the \\
-                            &                                     & correct external key ID. \\
-      \hline
-    \end{tabular}
-  \end{center}
-\end{table}
 
-\pagebreak
-
-\begin{table}[h!]
-  \begin{center}
-    \begin{tabular}{l l l}
-      \hline \hline
-                           & \textbf{KMS Exception}   &  \textbf{KMS Exception}\\
-      \textbf{Failure Scenario}   & \textbf{(KMS Operation)} &  \textbf{Message} \\
-      \hline \hline
-      Proxy returns an      & XksProxyInvalidConfigurationException & The external key store proxy \\
-   InvalidUriPathException  & (Create/UpdateCustomKeyStore)       & rejected the request because \\
-                            & CustomKeyStoreInvalidStateException & of an invalid URI path. Verify \\
-                            & (CreateKey)                         & the URI path for your external \\
-                            & KMSInvalidStateException            & key store and update if \\
-                            & (Cryptographic operations)          & necessary. \\
-      \hline
-      Proxy returns an      & XksKeyInvalidResponseException      & The external key store proxy \\
- UnsupportedOperationException & (CreateKey)                      & rejected the request because \\
-                            & KMSInvalidStateException            & it does not support the \\
-                            & (Cryptographic operations)          & requested operation. If you \\
-                            &                                     & see this error repeatedly, \\
-                            &                                     & report it to your external \\
-                            &                                     & key store proxy administrator.\\
-      \hline
-      Proxy returns a       & XksProxyUriUnreachableException     & The external key store proxy \\
- DependencyTimeoutException & (Create/UpdateCustomKeyStore)       & did not respond to the request \\
-                            & CustomKeyStoreInvalidStateException & in the time allotted. Retry \\
-                            & (CreateKey)                         & the request. If you see this \\
-                            & KMSInvalidStateException            & error repeatedly, report it \\
-                            & (Cryptographic operations)          & to your external key store \\
-                            &                                     & proxy administrator. \\
-      \hline
-      Proxy returns a       & XksProxyUriUnreachableException     & The external key store proxy \\
- ThrottlingException        & (Create/UpdateCustomKeyStore)       & rejected the request due to \\
-                            & CustomKeyStoreInvalidStateException & a very high request rate. \\
-                            & (CreateKey)                         & Reduce the frequency of your \\
-                            & KMSInvalidStateException            & calls using KMS keys in this \\
-                            & (Cryptographic operations)          & external key store. \\
-      \hline
-      Proxy returns         & XksProxyInvalidResponseException    & The external key store proxy \\
-      an InternalException  & (Create/UpdateCustomKeyStore)       & rejected the request because \\
-                            & CustomKeyStoreInvalidStateException & it cannot communicate with the \\
-                            & (CreateKey)                         & external HSM. Verify that the \\
-                            & KMSInvalidStateException            & external key store proxy \\
-                            & (Cryptographic operations)          & configuration is correct and \\
-                            &                                     & that the external HSM is \\
-                            &                                     & available. \\
-      \hline
-     AWS KMS cannot establish   & XksProxyUriUnreachableException     & AWS KMS cannot communicate  \\
-     a TCP connection       & (Create/UpdateCustomKeyStore)       & with the external key store \\
-                            & CustomKeyStoreInvalidStateException & proxy. This might be a transient \\
-                            & (CreateKey)                         & network issue. If you see this \\
-                            & KMSInvalidStateException            & error repeatedly, verify that \\
-                            & (Cryptographic operations)          & your external key store proxy \\
-                            &                                     & is active and is connected to \\
-                            &                                     & the network, and that its \\
-                            &                                     & endpoint URI is correct in your \\
-                            &                                     & external keystore. \\
-      \hline
-     AWS KMS cannot establish   & XksProxyUriUnreachableException     & AWS KMS cannot establish a \\
-     a TLS connection       & (Create/UpdateCustomKeyStore)       & TLS connection to the external \\
-                            & CustomKeyStoreInvalidStateException & key store proxy. Verify the \\
-                            & (CreateKey)                         & TLS configuration, including \\
-                            & KMSInvalidStateException            & its certificate. \\
-                            & (Cryptographic operations)          & \\ 
-      \hline
-    \end{tabular}
-  \end{center}
-\end{table}
-
-\pagebreak
-
-\begin{table}[h!]
-  \begin{center}
-    \begin{tabular}{l l l}
-      \hline \hline
-                           & \textbf{KMS Exception}   &  \textbf{KMS Exception}\\
-      \textbf{Failure Scenario}   & \textbf{(KMS Operation)} &  \textbf{Message} \\
-      \hline \hline
-     AWS KMS encounters     & XksProxyUriUnreachableException     & AWS KMS rejected the request \\
-     a socket timeout       & (Create/UpdateCustomKeyStore)       & because the external key store \\
-                            & CustomKeyStoreInvalidStateException & proxy did not respond in time. \\
-                            & (CreateKey)                         & Retry the request. If you see \\
-                            & KMSInvalidStateException            & this error repeatedly, report \\
-                            & (Cryptographic operations)          & it to your external key store \\
-                            &                                     & proxy administrator. \\
-      \hline
-     Proxy returns          & XksProxyInvalidResponseException    & AWS KMS cannot interpret the \\
-     a malformed response   & (Create/UpdateCustomKeyStore)       & response from the external \\
-                            & CustomKeyStoreInvalidStateException & key store proxy. If you see \\
-                            & (CreateKey)                         & this error repeatedly, report \\
-                            & KMSInvalidStateException            & it to your external key store\\
-                            & (Cryptographic operations)          & proxy administrator. \\
-      \hline
-    Custom key store is     & CustomKeyStoreInvalidStateException & This KMS key is in a custom \\
-    not in CONNECTED        & (CreateKey)                         & key store that is not connected \\
-    state                   & KMSInvalidStateException            & to its external key store proxy.\\
-                            & (Cryptographic operations)          & Connect the external key store \\
-                            &                                     & and try the request again. \\
-      \hline
-    \end{tabular}
-  \end{center}
-\end{table}
+| Failure Scenario                                  | KMS Exception<br>(KMS Operation)                                                                                                                                                                        | KMS Exception<br>Message                                                                                                                                                                                                                                                                                                 |
+|---------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Proxy returns a<br>ValidationException            | XksProxyInvalidResponseException<br>(Create/UpdateCustomKeyStore)<br>CustomKeyStoreInvalidStateException<br>(CreateKey)<br>KMSInvalidStateException<br>(Cryptographic operations)                       | AWS KMS cannot interpret the<br>response from the external<br>key store proxy. If you see<br>this error repeatedly, report<br>it to your external key store<br>proxy administrator.                                                                                                                                      |
+| Proxy returns an<br>InvalidStateException         | XksKeyInvalidConfigurationException<br>(CreateKey)<br>KMSInvalidStateException<br>(Cryptographic operations)                                                                                            | The external key associated<br>with this KMS key in an<br>external key store is not<br>enabled in the external HSM.<br>Enable the external key in<br>the external HSM and retry<br>the request.                                                                                                                          |
+| Proxy returns an<br>InvalidCiphertextException    | KMSInvalidStateException<br>(Decrypt, ReEncrypt)                                                                                                                                                        | The external key store proxy<br>rejected the request because<br>the specified ciphertext or<br>encryption context is corrupted,<br>missing, or otherwise invalid.                                                                                                                                                        |
+| Proxy returns an<br>invalid ciphertext            | KMSInvalidStateException<br>(Decrypt, ReEncrypt)                                                                                                                                                        | The ciphertext that the external<br>key store proxy submitted for<br>decryption, or the encryption<br>context, is corrupted, missing,<br>or otherwise invalid.                                                                                                                                                           |
+| Proxy returns an<br>InvalidKeyUsageException      | XksKeyInvalidConfigurationException<br>(CreateKey)<br>KMSInvalidStateException<br>(Cryptographic operations)                                                                                            | The external key associated<br>with this KMS key in an<br>external key store does not<br>support the requested operation.<br>Enable the operation on the<br>key in your external HSM,<br>and try the request again.                                                                                                      |
+| Proxy returns an<br>AuthenticationFailedException | XksProxyIncorrectAuthentication<br>CredentialException<br>(Create/UpdateCustomKeyStore)<br>CustomKeyStoreInvalidStateException<br>(CreateKey)<br>KMSInvalidStateException<br>(Cryptographic operations) | The external key store proxy<br>rejected the request because<br>it could not authenticate AWS<br>KMS. Verify the XKS proxy<br>authentication credentials for<br>your external key store and<br>update if necessary.                                                                                                      |
+| Proxy returns an<br>AccessDeniedException         | KMSInvalidStateException<br>(CreateKey, Crypto operations)                                                                                                                                              | The external key store proxy<br>denied access to the operation.<br>Verify that the user and the<br>external key are both<br>authorized for this operation,<br>and try the request again.                                                                                                                                 |
+| Proxy returns a<br>KeyNotFoundException           | XksKeyNotFoundException<br>(CreateKey)<br>KMSInvalidStateException<br>(Cryptographic operations)                                                                                                        | The external key associated<br>with this KMS key in an<br>external key store was not<br>found in its external HSM. If<br>the external key ID associated<br>with this KMS key is incorrect,<br>create a new KMS key with the<br>correct external key ID.                                                                  |
+| Proxy returns an<br>InvalidUriPathException       | XksProxyInvalidConfigurationException<br>(Create/UpdateCustomKeyStore)<br>CustomKeyStoreInvalidStateException<br>(CreateKey)                  <br>KMSInvalidStateException<br>(Cryptographic operations)                  | The external key store proxy<br>rejected the request because<br>of an invalid URI path. Verify<br>the URI path for your external<br>key store and update if<br>necessary.                                                                                                                                                |
+| Proxy returns an<br>UnsupportedOperationException | XksKeyInvalidResponseException<br>(CreateKey)<br>KMSInvalidStateException<br>(Cryptographic operations)                                                                                                 | The external key store proxy<br>rejected the request because<br>it does not support the<br>requested operation. If you<br>see this error repeatedly,<br>report it to your external<br>key store proxy administrator.                                                                                                     |
+| Proxy returns a<br>DependencyTimeoutException     | XksProxyUriUnreachableException<br>(Create/UpdateCustomKeyStore)<br>CustomKeyStoreInvalidStateException<br>(CreateKey)<br>KMSInvalidStateException<br>(Cryptographic operations)                        | The external key store proxy<br>did not respond to the request<br>in the time allotted. Retry<br>the request. If you see this<br><br>error repeatedly, report it<br>to your external key store<br>proxy administrator.                                                                                                   |
+| Proxy returns a<br>ThrottlingException            | XksProxyUriUnreachableException<br>(Create/UpdateCustomKeyStore)<br>CustomKeyStoreInvalidStateException<br>(CreateKey)<br>KMSInvalidStateException<br>(Cryptographic operations)                        | The external key store proxy<br>rejected the request due to<br>a very high request rate.<br>Reduce the frequency of your<br>calls using KMS keys in this<br>external key store.                                                                                                                                          |
+| Proxy returns<br>an InternalException             | XksProxyInvalidResponseException<br>(Create/UpdateCustomKeyStore)<br>CustomKeyStoreInvalidStateException<br>(CreateKey)<br>KMSInvalidStateException<br>(Cryptographic operations)                       | The external key store proxy<br>rejected the request because<br>it cannot communicate with the<br>external HSM. Verify that the<br>external key store proxy<br>configuration is correct and<br>that the external HSM is<br>available.                                                                                    |
+| AWS KMS cannot establish<br>a TCP connection      | XksProxyUriUnreachableException<br>(Create/UpdateCustomKeyStore)<br>CustomKeyStoreInvalidStateException<br>(CreateKey)<br>KMSInvalidStateException<br>(Cryptographic operations)                        | AWS KMS cannot communicate<br>with the external key store<br>proxy. This might be a transient<br>network issue. If you see this<br>error repeatedly, verify that<br>your external key store proxy<br>is active and is connected to<br>the network, and that its<br>endpoint URI is correct in your<br>external keystore. |
+| AWS KMS cannot establish<br>a TLS connection      | XksProxyUriUnreachableException<br>(Create/UpdateCustomKeyStore)<br>CustomKeyStoreInvalidStateException<br>(CreateKey)<br>KMSInvalidStateException<br>(Cryptographic operations)                        | AWS KMS cannot establish a<br>TLS connection to the external<br>key store proxy. Verify the<br>TLS configuration, including<br>its certificate.                                                                                                                                                                          |
+| AWS KMS encounters<br>a socket timeout            | XksProxyUriUnreachableException<br>(Create/UpdateCustomKeyStore)<br>CustomKeyStoreInvalidStateException<br>(CreateKey)<br>KMSInvalidStateException<br>(Cryptographic operations)                        | AWS KMS rejected the request<br>because the external key store<br>proxy did not respond in time.<br>Retry the request. If you see<br>this error repeatedly, report<br>it to your external key store<br><br>proxy administrator.                                                                                          |
+| Proxy returns<br>a malformed response             | XksProxyInvalidResponseException<br>(Create/UpdateCustomKeyStore)<br>CustomKeyStoreInvalidStateException<br>(CreateKey)<br>KMSInvalidStateException<br>(Cryptographic operations)                       | AWS KMS cannot interpret the<br>response from the external<br>key store proxy. If you see<br>this error repeatedly, report<br>it to your external key store<br>proxy administrator.                                                                                                                                      |
+| Custom key store is<br>not in CONNECTED<br>state  | CustomKeyStoreInvalidStateException<br>(CreateKey)<br>KMSInvalidStateException<br>(Cryptographic operations)                                                                                            | This KMS key is in a custom<br>key store that is not connected<br>to its external key store proxy.<br>Connect the external key store<br>and try the request again.                                                                                                                                                       |
 
 
 \pagebreak
