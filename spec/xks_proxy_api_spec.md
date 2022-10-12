@@ -9,9 +9,9 @@
 
 >**This information is AWS confidential and is being shared under a Non Disclosure Agreement. The API interface described in this document is subject to change.**
 
-Refer to the Change Log in [Appendix E](#appendix-e) for a history of the changes.
+Refer to the Change Log in [Appendix E](#appendix-e:-change-log) for a history of the changes.
 
-*Last Updated: Oct 10, 2022*
+*Last Updated: Oct 12, 2022*
 
 ## Background
 
@@ -993,7 +993,7 @@ Collecting GetHealthStatus metrics ...
 ```
 \pagebreak
 
-## Appendix E: Change Log {#appendix-e}
+## Appendix E: Change Log
 
 * Version 0.0.1: Based on Aviral’s internal doc. Mainly added use of RFC 2119 terminology and best practices guidance using SHOULDs, e.g. on separating keys using domains within the external key managers, marking them non-exportable etc
 * Version 0.0.2: Incorporated feedback from Ken and vendor partner. Removed key lifecycle APIs from Faythe interface. Replaced External HSM with External Key Manager. Used standard error codes between Faythe and the XKS Proxy Management Fleet (we can still convert them before exposing them to KMS API caller). Message body is used for additional disambiguation/finer granularity in describing the error.
@@ -1073,3 +1073,5 @@ Collecting GetHealthStatus metrics ...
     * Renumbered pre-GitHub version numbers, e.g. pre-GitHub version number X was renumbered 0.0.X. The jump in version number reflects we are getting close to finalizing v1 of the XKS Proxy API specification.
  * Version 0.9.7 (Oct 10, 2022):
     * Allow period as a valid character in the `externalKeyId`.
+ * Version 0.9.8 (Oct 12, 2022):
+    * Changes to render the architecture diagram and tables correctly when viewing the specification markdown on GitHub.   
