@@ -682,7 +682,6 @@ Customers use the KMS CreateCustomKeyStore API to create a custom key store of t
 
 An XKS proxy MUST support SigV4-based authentication of XKS API requests. Additionally, an XKS proxy SHOULD support client-side TLS authentication (aka mutual TLS or mTLS). If the XKS proxy supports mTLS, it MUST allow the customer to configure both the subject name and the root certificate authority (CA) for the client certificate. The XKS proxy MUST terminate the TLS handshake if the client presents a certificate containing a different subject name or chained to a different certificate authority. When prompted for TLS client authentication by an XKS proxy, KMS will present a certificate with a subject common name (CN) containing the service principal `cks.kms.<Region>.amazonaws.com`. For example, in eu-west-1 (Ireland), KMS will present a client certificate with CN=`cks.kms.eu-west-1.amazonaws.com`. This certificate will be chained to one of the certificate authorities associated with [Amazon Trust Services](https://www.amazontrust.com/repository/). Customers that wish to authenticate AWS KMS via mTLS MUST configure their XKS proxy to only accept client-side certs with CN=`cks.kms.<Region>.amazonaws.com` and chained to one of the Amazon Trust Services CAs. If the shared secret used in SigV4 signing is accidentally exposed to an unauthorized entity, that entity will not be able to make successful XKS API calls if the proxy only allows mTLS connections from AWS KMS.
 
-**NOTE**: KMS uses S2N for its TLS implementation and [S2N](https://github.com/aws/s2n-tls) supports post-quantum algorithms (see [here](https://aws.amazon.com/blogs/security/post-quantum-tls-now-supported-in-aws-kms/) and [here](https://aws.amazon.com/blogs/security/round-2-post-quantum-tls-is-now-supported-in-aws-kms/)). We recommend, but do not require, that the XKS Proxy endpoint support post-quantum TLS.
 
 ### SigV4 Credentials Rotation
 
@@ -1107,4 +1106,6 @@ Collecting GetHealthStatus metrics ...
  * Version 0.9.7 (Oct 10, 2022):
     * Allow period as a valid character in the `externalKeyId`.
  * Version 0.9.8 (Oct 12, 2022):
-    * Changes to render the architecture diagram and tables correctly when viewing the specification markdown on GitHub.   
+    * Changes to render the architecture diagram and tables correctly when viewing the specification markdown on GitHub.
+    * Fixed anchor link navigation, added a table of contents and removed extraneous asterisks in a couple of headers.
+    * Removed unnecessary reference to post-quantum TLS ciphersuites in S2N
