@@ -9,6 +9,33 @@
 - [External Key Store Proxy API Specification](#external-key-store-proxy-api-specification)
     - [Background](#background)
     - [High Level Architecture](#high-level-architecture)
+    - [API Content Type](#api-content-type)
+    - [API Operations](#api-operations)
+        - [GetKeyMetadata](#getkeymetadata)
+        - [Encrypt](#encrypt)
+        - [Decrypt](#decrypt)
+        - [GetHealthStatus](#gethealthstatus)
+        - [Error Codes](#error-codes)
+    - [Authentication](#authentication)
+        - [SigV4 Credentials Rotation](#sigv4-credentials-rotation)
+    - [Authorization](#authorization)
+    - [Logging](#logging)
+    - [Testing](#testing)
+    - [Other Considerations](#other-considerations)
+        - [Load Balancer Health Checks](#load-balancer-health-checks)
+        - [XKS Proxy COnfiguration in AWS KMS Console](#xks-proxy-configuration-in-aws-kms-console)
+        - [Troubleshooting](#troubleshooting)
+    - [Appendix A: SigV4 Signatures on XKS Proxy Requests](#appendix-a-sigv4-signatures-on-xks-proxy-requests)
+        - [Task 1: Create a Canonical Request](#task-1-create-a-canonical-request)
+        - [Task 2: Create a String to Sign](#task-2-create-a-string-to-sign)
+        - [Task 3: Calculate the signature](#task-3-calculate-the-signature)
+        - [Task 4: Match the signature](#match-the-signature)
+    - [Appendix B: RequestMetadata Fields](#appendix-b-requestmetadata-fields)
+    - [Appendix C: CDIV Implementation Guidelines](#appendix-c-cdiv-implementation-guidelines)
+    - [Appendix D: Using curl for XKS API calls](#appendix-d-using-curl-for-xks-api-calls)
+
+
+<div style="page-break-after: always"></div>
 
 
 # External Key Store Proxy API Specification
