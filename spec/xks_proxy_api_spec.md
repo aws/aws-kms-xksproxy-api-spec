@@ -1,10 +1,8 @@
-\pagebreak
-
 <!---
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: CC-BY-SA-4.0
 -->
-# Contents
+# Table of Contents
 
 - [External Key Store Proxy API Specification](#external-key-store-proxy-api-specification)
     - [Background](#background)
@@ -29,10 +27,11 @@
         - [Task 1: Create a Canonical Request](#task-1-create-a-canonical-request)
         - [Task 2: Create a String to Sign](#task-2-create-a-string-to-sign)
         - [Task 3: Calculate the signature](#task-3-calculate-the-signature)
-        - [Task 4: Match the signature](#match-the-signature)
+        - [Task 4: Match the signature](#task-4-match-the-signature)
     - [Appendix B: RequestMetadata Fields](#appendix-b-requestmetadata-fields)
     - [Appendix C: CDIV Implementation Guidelines](#appendix-c-cdiv-implementation-guidelines)
     - [Appendix D: Using curl for XKS API calls](#appendix-d-using-curl-for-xks-api-calls)
+    - [Appendix E: Change Log](#appendix-e-change-log)
 
 
 <div style="page-break-after: always"></div>
