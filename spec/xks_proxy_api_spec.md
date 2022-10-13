@@ -193,7 +193,7 @@ The HTTP body of the request contains requestMetadata fields that provide additi
 The following attributes MUST be present in response payload:
 
 1. **keySpec** - Specifies the type of external key. This field is REQUIRED. The XKS Proxy must use the string `AES_256` to indicate a 256-bit AES key.
-2. **ke****yUsage** - Specifies an array of cryptographic operations for which external key can be used. This field is REQUIRED. The XKS Proxy must use the strings `ENCRYPT` and `DECRYPT` (all uppercase) to indicate when an external key supports encrypt and decrypt operations, respectively. The XKS Proxy response MAY include additional values supported by that external key, e.g. PKCS11-based HSMs additionally support DERIVE, SIGN, VERIFY, WRAP, UNWRAP. The response MUST NOT contain more than ten keyUsage values.
+2. **keyUsage** - Specifies an array of cryptographic operations for which external key can be used. This field is REQUIRED. The XKS Proxy must use the strings `ENCRYPT` and `DECRYPT` (all uppercase) to indicate when an external key supports encrypt and decrypt operations, respectively. The XKS Proxy response MAY include additional values supported by that external key, e.g. PKCS11-based HSMs additionally support DERIVE, SIGN, VERIFY, WRAP, UNWRAP. The response MUST NOT contain more than ten keyUsage values.
 3. **keyStatus** - Specifies the state of the external key. The supported values are `ENABLED` and `DISABLED`. This field is REQUIRED. If neither the external key manager nor the XKS Proxy support disabling individual keys, the XKS Proxy MUST return ENABLED for this field.
 
 
@@ -221,7 +221,7 @@ The following attributes MUST be present in response payload:
 
 <div style="page-break-after: always"></div>
 
-**KMS Considerations****:**
+**KMS Considerations:**
 
 KMS invokes the XKS Proxy’s GetKeyMetadata API when a customer calls either the KMS CreateKey or DescribeKey API for a KMS key in an external key store. 
 
