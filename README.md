@@ -5,15 +5,9 @@
 This repository contains the [AWS KMS External Keystore (XKS) Proxy API Specification](xks_proxy_api_spec.md
 ) in markdown format.
 
-## License Summary
+## License
 
-This documentation is made available under the Creative Commons Attribution-ShareAlike 4.0 International License. See the LICENSE file.
-
-The sample code within this documentation is made available under the MIT-0 license. See the LICENSE-SAMPLECODE file.
-
-## Security
-
-See [CONTRIBUTING](CONTRIBUTING.md#security-issue-notifications) for more information.
+This specification is made available under the Creative Commons Attribution-ShareAlike 4.0 International License. See the [LICENSE](LICENSE) file.
 
 ## Generating PDF
 
@@ -25,4 +19,6 @@ See [CONTRIBUTING](CONTRIBUTING.md#security-issue-notifications) for more inform
 - Enable "Reader view" and choose File -> Export as PDF
 - Select a name for the PDF file and save
 
+## Security
 
+See [CONTRIBUTING](CONTRIBUTING.md#security-issue-notifications) for more information.
