@@ -1,7 +1,7 @@
 # Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 # SPDX-License-Identifier: MIT-0
 NAME    := aws-kms-xksproxy-api-spec
-VERSION := 0.9.7
+VERSION := 0.9.8
 RELEASE := 0
 SOURCE_BUNDLE := $(NAME)-$(VERSION)-$(RELEASE).txz
 PDF := $(NAME)-$(VERSION).pdf
@@ -26,7 +26,6 @@ build/$(PDF):
 	mkdir -p build
 	pandoc --listings \
 		-H tex/listings-setup.tex \
-		--toc \
 		-V geometry:"left=1cm, top=2cm, right=1cm, bottom=2cm" \
 		--pdf-engine=xelatex \
 		-V 'mainfont:DejaVuSerif.ttf' \
