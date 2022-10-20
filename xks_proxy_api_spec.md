@@ -64,7 +64,7 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "S
 ## High Level Architecture
 
 
-![High-level XKS Architecture](../images/XKS_arch_v6.png)
+![High-level XKS Architecture](XKS_arch_v6.png)
 **Figure 1**: High-level KMS architecture with its main components for External Key Store (XKS) support.
 
 Figure 1 shows the high-level architecture for external key store support in AWS KMS. The XKS Proxy abstracts away API differences across multiple types of external key managers and provides a uniform HTTPS-based API for invoking cryptographic operations involving external keys. This standardized interface is indicated by the thick, vertical, dashed lines in Figure 1. Everything to the right of the interface is the customer’s responsibility, everything to the left and inside the AWS boundary is the responsibility of AWS. 

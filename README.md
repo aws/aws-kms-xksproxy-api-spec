@@ -2,34 +2,27 @@
 
 ## AWS KMS External Keystore (XKS) Proxy API Specification
 
-This repository contains the AWS KMS External Keystore (XKS) Proxy API Specification in markdown format, which can be used to generate a PDF file via [pandoc](https://pandoc.org/).
+This repository contains the [AWS KMS External Keystore (XKS) Proxy API Specification](xks_proxy_api_spec.md
+) in markdown format.
 
-### Install pandoc
+## License Summary
 
-```bash
-# On OSX
-brew install pandoc
+This documentation is made available under the Creative Commons Attribution-ShareAlike 4.0 International License. See the LICENSE file.
 
-# Or alternatively,
-make install_pandoc_osx
-```
-
-### Generate PDF from markdown
-
-```bash
-# This would generate xks_proxy_api_spec_<version>.pdf under the build folder
-make
-
-# Create a source bundle of this repository
-make bundle
-```
+The sample code within this documentation is made available under the MIT-0 license. See the LICENSE-SAMPLECODE file.
 
 ## Security
 
 See [CONTRIBUTING](CONTRIBUTING.md#security-issue-notifications) for more information.
 
-## License Summary
+## Generating PDF
 
-The documentation is made available under the Creative Commons Attribution-ShareAlike 4.0 International License. See the LICENSE file.
+### Chrome
+- Select the entire markdown text for the specification and choose File -> Print. 
+- In the print dialog, check the box for "Selection only" under "More settings" and click "Save".
 
-The sample code within this documentation is made available under the MIT-0 license. See the LICENSE-SAMPLECODE file.
+### Safari
+- Enable "Reader view" and choose File -> Export as PDF
+- Select a name for the PDF file and save
+
+
