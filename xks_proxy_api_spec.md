@@ -52,7 +52,7 @@ See [Appendix E](#appendix-e-change-log) for a history of the changes.
 
 AWS services typically do not use a KMS key directly for encrypting customer data. Instead, they generate data keys and use envelope encryption to protect customer data. The data keys are encrypted using a KMS key and kept next to the data they encrypt. The plaintext version of  the data key is held in-memory by the integrated service only for a short period. Attempts to access encrypted customer data result in a decrypt API call to KMS to get the plaintext data key. When the key material for a KMS key is hosted in external key managers, cryptographic operations to unwrap/wrap the data key are performed in a customer-chosen datacenter outside AWS.
 
-The new capability is meant to support a variety of external key managers from different vendors. The architecture introduces a proxy, the External Key Story Proxy (aka XKS Proxy), whose primary purpose is to abstract away the API differences across various types of external key managers. The XKS Proxy presents KMS with a uniform API interface described in this document. KMS maintains a fleet of hosts, the XKS Proxy Management Fleet, that communicates with multiple instances of XKS Proxies. The rest of this document describes Version 1 of the XKS Proxy interface including message formats,  authentication and authorization controls, error conditions and additional implementation guidance. 
+The new capability is meant to support a variety of external key managers from different vendors. The architecture introduces a proxy, the External Key Story Proxy (aka XKS Proxy), whose primary purpose is to abstract away the API differences across various types of external key managers. The XKS Proxy presents KMS with a uniform API interface described in this document. KMS maintains a fleet of hosts, the XKS Proxy Management Fleet, that communicates with multiple instances of XKS Proxies. The rest of this document describes Version 1 of the XKS Proxy interface including message formats, authentication and authorization controls, error conditions and additional implementation guidance.
 
 KMS keys whose key material resides in an external key manager can be distinguished from other KMS keys by their *Origin* which is set to **EXTERNAL_KEY_STORE**. 
 
@@ -677,7 +677,7 @@ If an XKS proxy returns an HTTP error code without a JSON-formatted body or any 
 
 ## Authentication
 
-Communication between the XKS Proxy Management Fleet and XKS Proxy MUST be protected by HTTPS. Standard TLS server-side authentication MUST be used to authenticate the XKS Proxy to the XKS Proxy Management Fleet, i.e. the DNS domain name of the XKS Proxy endpoint must match the hostname specified in its server certificate.
+Communication between the XKS Proxy Management Fleet and XKS Proxy MUST be protected by HTTPS. Standard TLS server-side authentication MUST be used to authenticate the XKS Proxy to the XKS Proxy Management Fleet, i.e. the DNS domain name of the XKS Proxy endpoint must match the hostname specified in its server certificate. The proxy's certificate MUST be issued by one of [these public certificate authorities](TrustedCertificateAuthorities) for AWS KMS to successfully authenticate the proxy.
 
 Customers use the KMS `CreateCustomKeyStore` API to create a custom key store of type `EXTERNAL_KEY_STORE`. As part of this API call, customers specify the XKS Proxy API endpoint and credentials. The credentials include an access key id and a secret access key which are used by AWS KMS to [sign](https://docs.aws.amazon.com/general/latest/gr/sigv4-calculate-signature.html) all XKS Proxy API requests using [AWS SigV4](https://docs.aws.amazon.com/general/latest/gr/signature-version-4.html). The same credentials are also configured by the customer at the XKS Proxy so the proxy can verify the signature independent of AWS authentication and authorization. Anyone who possesses this secret access key can make successful API calls to the XKS Proxy. The XKS Proxy administrator must ensure that this secret is not exposed to unauthorized users. [Appendix A](#appendix-a-using-sigv4-to-sign-xks-proxy-requests) describes SigV4 usage for signing requests from AWS KMS to the XKS Proxy.
 
@@ -1118,3 +1118,6 @@ Collecting GetHealthStatus metrics ...
  * Version 1.0.0 (Nov 10, 2022):
     * Updated terminology (preferring external key manager over external HSM) to match our public docs. This is also reflected in the KMS error messages.
     * Replaced TBD references with actual numbers for health status polling frequency and TPS quota on AWS KMS external key stores.
+ * Version 1.0.1 (Nov 10, 2022):
+    * Added a link to the list of public certificate authorities trusted by AWS KMS for authenticating an external key store proxy.
+
