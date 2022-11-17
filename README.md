@@ -8,6 +8,10 @@ This repository contains the [AWS KMS External Keystore (XKS) Proxy API Specific
 
 If you discover a potential security issue, please follow [these](CONTRIBUTING.md#security-issue-notifications) guidelines.
 
+A sample XKS proxy implementing this specification is available at [aws-kms-xks-proxy](https://github.com/aws-samples/aws-kms-xks-proxy).
+
+A `curl` based test client that can be used to check if a specific XKS proxy implementation complies with this specification is available at [aws-kms-xksproxy-test-client](https://github.com/aws-samples/aws-kms-xksproxy-test-client).
+
 
 
 
