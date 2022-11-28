@@ -12,7 +12,7 @@ A sample XKS proxy implementing this specification is available at [aws-kms-xks-
 
 A `curl` based test client that can be used to check if a specific XKS proxy implementation complies with this specification is available at [aws-kms-xksproxy-test-client](https://github.com/aws-samples/aws-kms-xksproxy-test-client).
 
-Read the AWS News blog on [AWS KMS External Key Store Preview](https://aws.amazon.com/blogs/aws/announcing-aws-kms-external-key-store-xks) to learn more about the XKS feature in AWS KMS.
+Read the AWS News blog on [AWS KMS External Key Stores](https://aws.amazon.com/blogs/aws/announcing-aws-kms-external-key-store-xks) to learn more about the XKS feature in AWS KMS.
 
 
 
