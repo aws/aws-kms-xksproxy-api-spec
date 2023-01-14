@@ -184,7 +184,7 @@ The HTTP body of the request contains requestMetadata fields that provide additi
 {
     "requestMetadata": {
         "awsPrincipalArn": "arn:aws:iam::123456789012:user/Alice",
-        "kmsKeyArn": "arn:aws:kms:us-east-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab"
+        "kmsKeyArn": "arn:aws:kms:us-east-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab",
         "kmsOperation": "DescribeKey",
         "kmsRequestId": "4112f4d6-db54-4af4-ae30-c55a22a8dfae",
         "kmsViaService": "ebs"      
@@ -439,7 +439,7 @@ The HTTP body of the request contains requestMetadata along with input parameter
     "additionalAuthenticatedData": "cHJvamVjdD1uaWxlLGRlcGFydG1lbnQ9bWFya2V0aW5n",
     "encryptionAlgorithm": "AES_GCM",
     "ciphertext": "ghxkK1txeDNn3q8Y",
-    "ciphertextMetadata": "a2V5X3ZlcnNpb249MQ=="
+    "ciphertextMetadata": "a2V5X3ZlcnNpb249MQ==",
     "initializationVector": "HMrlRw85cAJUd5Ax",
     "authenticationTag": "vBxN2ncH1oEkR8WVXpmyYQ=="
 }
@@ -523,7 +523,7 @@ The HTTP body of the request only contains the requestMetadata.
 ```
 {
     "requestMetadata": {
-        "kmsRequestId": "4112f4d6-db54-4af4-ae30-c55a22a8dfae"
+        "kmsRequestId": "4112f4d6-db54-4af4-ae30-c55a22a8dfae",
         "kmsOperation": "CreateCustomKeyStore"
     }
 }
