@@ -56,6 +56,8 @@ The new capability is meant to support a variety of external key managers from d
 
 KMS keys whose key material resides in an external key manager can be distinguished from other KMS keys by their *Origin* which is set to **EXTERNAL_KEY_STORE**. 
 
+This document assumes familiarity with the [AWS KMS API](https://docs.aws.amazon.com/kms/latest/APIReference/API_Operations.html) and standard Base64 encoding as defined in [RFC 4687](https://www.rfc-editor.org/rfc/rfc4648#section-4).
+
 **Requirements Terminology**
    
 The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in [RFC 2119](https://datatracker.ietf.org/doc/html/rfc2119)
@@ -262,9 +264,9 @@ The HTTP body of the request contains requestMetadata along with input parameter
     5. **kmsOperation** - This is the KMS API call that resulted in the XKS Proxy API request, e.g. any one of four KMS APIs (Encrypt, ReEncrypt, GenerateDataKey, GenerateDataKeyWithoutPlaintext) can result in an Encrypt call. This field is REQUIRED. The XKS Proxy MUST NOT reject a request as invalid if it sees a kmsOperation other than those listed for this API call. In the future, KMS may introduce a new API (BulkEncrypt, say) that can be satisfied by calling one of the XKS APIs listed in this document. For proxies that implement [secondary authorization](#authorization), it is acceptable for XKS API requests made as part of the new KMS API to fail authorization. It is easier for a customer to update their XKS Proxy authorization policy than to update their XKS Proxy software. 
     6. **kmsRequestId** - This is the requestId of the call made to KMS that is visible in AWS CloudTrail. The XKS proxy SHOULD log this field to allow a customer to correlate AWS CloudTrail entries with log entries in the XKS Proxy. This field typically follows the format for [UUID](https://en.wikipedia.org/wiki/Universally_unique_identifier)s but the XKS Proxy MUST treat this as an opaque string and MUST NOT perform any validation on its structure. This field is REQUIRED.
     7. **kmsViaService** - This field is OPTIONAL. If present, it indicates the AWS service that called the KMS API on behalf of a customer (see [kms:ViaService](https://docs.aws.amazon.com/kms/latest/developerguide/policy-conditions.html#conditions-kms-via-service))
-2. **plaintext** - Base64-encoded plaintext provided to external key manager for encryption. The proxy MUST support the ability to process up to 4300 bytes of plaintext data. Note that Base64 encoding of 4300 bytes of binary data will result in a string that is 5737 bytes. Plaintext passed to the encrypt API MUST NOT be logged at XKS Proxy or the external key manager. This field is REQUIRED.
+2. **plaintext** - Base64-encoded plaintext provided to external key manager for encryption. The proxy MUST support the ability to process up to 4300 bytes of plaintext data. Note that Base64 encoding of 4300 bytes of binary data will result in a string that is 5736 bytes. Plaintext passed to the encrypt API MUST NOT be logged at XKS Proxy or the external key manager. This field is REQUIRED.
 3. **encryptionAlgorithm** - Specifies the algorithm that will be used for encryption. For the `v1` specification, this MUST be `AES_GCM`. This field is REQUIRED. 
-4. **additionalAuthenticatedData** (AAD) - AES-GCM is an example of an [AEAD](https://en.wikipedia.org/wiki/Authenticated_encryption) (Authenticated Encryption with Additional Data) cipher for which the encrypt operation produces an authenticationTag in addition to the ciphertext. The authenticationTag can be used to ensure the integrity of the ciphertext and additional data passed as AAD.  For a decrypt call to succeed, the same AAD that was used to create the ciphertext must be supplied to the decrypt operation. This field is OPTIONAL. When present, this field MUST be specified as a Base64 encoded string and used as the Additional Authenticated Data ([AAD](https://docs.aws.amazon.com/crypto/latest/userguide/cryptography-concepts.html#term-aad)) input to the AES-GCM operation inside the external key manager. The XKS Proxy MUST be able to handle AAD values up to 8192 bytes in length (the Base64 encoding of 8192 bytes will be 10925 bytes).
+4. **additionalAuthenticatedData** (AAD) - AES-GCM is an example of an [AEAD](https://en.wikipedia.org/wiki/Authenticated_encryption) (Authenticated Encryption with Additional Data) cipher for which the encrypt operation produces an authenticationTag in addition to the ciphertext. The authenticationTag can be used to ensure the integrity of the ciphertext and additional data passed as AAD.  For a decrypt call to succeed, the same AAD that was used to create the ciphertext must be supplied to the decrypt operation. This field is OPTIONAL. When present, this field MUST be specified as a Base64 encoded string and used as the Additional Authenticated Data ([AAD](https://docs.aws.amazon.com/crypto/latest/userguide/cryptography-concepts.html#term-aad)) input to the AES-GCM operation inside the external key manager. The XKS Proxy MUST be able to handle AAD values up to 8192 bytes in length (the Base64 encoding of 8192 bytes will be 10924 bytes).
 5. **ciphertextDataIntegrityValueAlgorithm** (CDIV Algorithm) - Indicates the hashing algorithm to be used in the
 computation of the Ciphertext Data Integrity Value (CDIV). For the first version (v1) of this specification, this MUST be "SHA_256". This field is OPTIONAL. When present, the XKS Proxy MUST return a ciphertextDataIntegrityValue field in its response as described below.
 
@@ -317,7 +319,7 @@ the ciphertextDataIntegrityValueAlgorithm field.
 1. **ciphertext** - Base64 encoded ciphertext generated by the external key manager from provided plaintext. Since `AES_GCM` is a stream cipher, the length of the ciphertext MUST be the same as the length of the plaintext. 
 2. **ciphertextMetadata:** The XKS Proxy MAY return up to 20 bytes of ciphertext metadata for internal housekeeping, e.g. an external key manager may implement automatic key rotation and use the extra bytes to encode versioning of the key material. This is an OPTIONAL, vendor-specific field. When present, the size of the field MUST NOT exceed 20 bytes and the value MUST be Base64-encoded (the encoded string will be more than 20 bytes). The XKS Proxy MUST append the  `ciphertextMetadata` to the `additionalAuthenticatedData` before normal AES GCM processing to ensure that integrity protection offered by the `authenticationTag` extends to the `ciphertextMetadata`.
 NOTE: It is important to explicitly include the length of `additionalAuthenitcatedData` and the length of the `ciphertextMetadata` to avoid unintended successful decrypts, e.g. when a caller calls encrypt with no `additionalAuthenticatedData`, receives a `ciphertextMetadata` in the response and then calls decrypt passing the `ciphertextMetadata` as `additionalAuthenticatedData` and no `ciphertextMetadata`. The AAD input for the external key manager should be computed as (2-byte length of `additionalAuthenticatedData` in big-endian format || `additionalAuthenticatedData` || 1-byte length of `ciphertextMetadata` || `ciphertextMetadata`) where || represents concatenation of the binary values after Base64 decoding. If the `additionalAuthenticatedData` or `ciphertextMetadata` is not present, the corresponding length MUST be set to zero. If the inclusion of the lengths represents a departure from previously implemented behavior, the XKS proxy SHOULD encode the new behavior in the `ciphertextMetadata` and use the encoding to follow the same behavior during decrypt as was used for the corresponding encrypt. Otherwise, previously generated ciphertext will no longer be decryptable. For example, let's say version A of an XKS proxy concatenated the `ciphertextMetdata` directly to `additionalAuthenticatedData` (without including the lengths) but Version B implements new guidance then there needs to be a mechanism to distinguish whether a decrypt call should use the old way or the new way to create the AAD for the external key manager. If Version B always implements the new behavior then ciphertext created by Version A will no longer be decryptable. The `ciphertextMetadata` is the natural place to encode this difference in how the `authenticationTag` was created.
-3. **initializationVector** - Base64 encoded initialization vector generated by the external key manager that was used during encrypt operation. The initialization vector MUST be either 12 bytes (96 bits) or 16 bytes (128 bits)
+3. **initializationVector** - Base64 encoded initialization vector generated by the external key manager that was used during encrypt operation. The initialization vector MUST be either 12 bytes (96 bits) or 16 bytes (128 bits). The Base64 encoding will have 16 bytes or 24 bytes.
 4. **authenticationTag** - Base64 encoded message authentication code generated by external key manager performing AES-GCM encryption. Authentication tag size MUST be 16 bytes (128 bits). Some key managers append the authentication tag to the ciphertext. In such cases, the XKS proxy MUST separate the two before composing the response.
 5. **ciphertextDataIntegrityValue** - This field is a Base64 encoded hash computed over the \
 `additionalAuthenticatedData` (if present in the request), `ciphertextMetadata` (if present), \
@@ -394,7 +396,7 @@ The HTTP body of the request contains requestMetadata along with input parameter
     6. **kmsRequestId** - This is the requestId of the call made to KMS which is visible in AWS CloudTrail. The XKS proxy SHOULD log this field to allow a customer to correlate AWS CloudTrail entries with log entries in the XKS Proxy. This field typically follows the format for [UUID](https://en.wikipedia.org/wiki/Universally_unique_identifier)s but the XKS Proxy MUST treat this as an opaque string and MUST NOT perform any validation on its structure. This field is REQUIRED.
     7. **kmsViaService** - This field is OPTIONAL. If present, it indicates the AWS service that called the KMS API on behalf of a customer (see [kms:ViaService](https://docs.aws.amazon.com/kms/latest/developerguide/policy-conditions.html#conditions-kms-via-service))
 2. **ciphertext** - Base64 encoded ciphertext provided to an external key manager for decryption. At a minimum, the proxy MUST support the ability to process 4300 bytes of ciphertext. Note the Base64 encoded string corresponding to 4300 bytes of binary data will be 5737 bytes long. This field is REQUIRED.
-3. **ciphertextMetadata:** Base64 encoded `ciphertextMetadata` that was included with the ciphertext in the output of the encrypt call that produced the ciphertext being decrypted. This is an OPTIONAL, vendor-specific field. When present, the size of the field MUST NOT exceed 20 bytes (before Base64 decoding). The XKS Proxy MUST detect when the `ciphertextMetadata` passed to decrypt has been modified relative to the `ciphertextMetadata` generated during the corresponding encrypt. Appending the `ciphertextMetadata` to the `additionalAuthenticatedData` and using that as the AAD for the external key manager, as described in the Encrypt API, will automatically accomplish this.
+3. **ciphertextMetadata:** Base64 encoded `ciphertextMetadata` that was included with the ciphertext in the output of the encrypt call that produced the ciphertext being decrypted. This is an OPTIONAL, vendor-specific field. When present, the size of the field MUST NOT exceed 20 bytes (before Base64 encoding). The XKS Proxy MUST detect when the `ciphertextMetadata` passed to decrypt has been modified relative to the `ciphertextMetadata` generated during the corresponding encrypt. Appending the `ciphertextMetadata` to the `additionalAuthenticatedData` and using that as the AAD for the external key manager, as described in the Encrypt API, will automatically accomplish this.
 4. **encryptionAlgorithm** - Specifies the algorithm that was used for encryption. In `v1` specification, this will always be `AES_GCM`. This field is REQUIRED.
 5. **additionalAuthenticatedData** (AAD) - AES-GCM is an example of an [AEAD](https://en.wikipedia.org/wiki/Authenticated_encryption) (Authenticated Encryption with Additional Data) cipher for which the encrypt operation produces an authenticationTag in addition to the ciphertext. The authenticationTag can be used to ensure the integrity of the ciphertext and additional data passed as AAD.  For a decrypt call to succeed, the same AAD that was used to create the ciphertext must be supplied to the decrypt operation. This field is OPTIONAL. When present, this field MUST be specified as a Base64 encoded string and used as the Additional Authenticated Data ([AAD](https://docs.aws.amazon.com/crypto/latest/userguide/cryptography-concepts.html#term-aad)) input to the AES-GCM operation inside the external key manager. The XKS Proxy MUST be able to handle AAD values up to 8192 bytes in length (the Base64 encoding of 8192 bytes will be 10925 bytes).
 6. **initializationVector** - Base64 encoded initialization vector generated by the external key manager that was used during encrypt operation. For a decrypt call to succeed, this must be the same IV that was generated when the ciphertext was created. This field is REQUIRED. For `AES_GCM`, the length of the initializationVector MUST be 12 bytes or 16 bytes (the Base64 encoding will have 16 bytes or 24 bytes).
@@ -531,7 +533,7 @@ The HTTP body of the request only contains the requestMetadata.
 
 The following attributes MUST be present in response payload:
 
-1. **xksProxyFleetSize** - Size of XKS proxy fleet. 
+1. **xksProxyFleetSize** - Size of XKS proxy fleet. This MUST be an integer greater than zero.
 2. **xksProxyVendor** - Name of the XKS Proxy vendor, this could be different from the name of the external key manager vendor. Both MUST be included even if they are the same.
 3. **xksProxyModel** - Model of the XKS Proxy. This SHOULD include the product name and version.
 4. **ekmVendor** - Name of the external key manager vendor.
@@ -539,7 +541,7 @@ The following attributes MUST be present in response payload:
 6. **ekmFleetDetails.model** - Model of the external key manager. This SHOULD include the product name, version of the hardware and any other information that would be useful in troubleshooting and estimating TPS capacity.
 7. **ekmFleetDetails.healthStatus** - Status of health check on the external key manager from XKS proxy. The possible statuses are `ACTIVE`, `DEGRADED` and `UNAVAILABLE`. `ACTIVE` means that external key manager is healthy, `DEGRADED` means that external key manager is unhealthy but can still serve traffic and `UNAVAILABLE` means that external key manager is unable to serve traffic.
 
-The response MUST have atleast one and no more than ten entries in ekmFleetDetails.
+The response MUST have at least one and no more than ten entries in ekmFleetDetails.
 **Required Parameters:** ALL
 
 **Success Response Code:** 200  (for errors, see [Error Codes](#error-codes))
@@ -548,7 +550,7 @@ The response MUST have atleast one and no more than ten entries in ekmFleetDetai
 
 ```
 {
-    "xksProxyFleetSize": integer,
+    "xksProxyFleetSize": number, // integer, greater than zero
     "xksProxyVendor": string,
     "xksProxyModel": string,
     "ekmVendor": string,
@@ -833,20 +835,15 @@ When an Encrypt request specifies a `ciphertextDataIntegrityAlgorithm`, the corr
 ```
 additionalAuthenticatedData || ciphertextMetadata || initializationVector || ciphertext || authenticationTag
 ```
-Here "`||`" represents concatenation. If the request does not include `additionalAuthenticatedData`, the hash is computed over the decoded
-```
-ciphertextMetadata || initializationVector || ciphertext || authenticationTag
-``` 
+Here "`||`" represents concatenation. The empty string "" is the identity value for concatentation, so `(A || "") = ("" || A) = A`.
 
-If the request includes `additionalAuthenticatedData` but the response does not include `ciphertextMetadata`, the hash is computed over the decoded 
+The `additionalAuthenticatedData` in the request and the `ciphertextMetadata` in the response are optional. If a field is not present, use the empty string "" for it in the hash computation. For example, if the request includes `additionalAuthenticatedData` but the response does not include `ciphertextMetadata`, the hash is computed over the decoded 
+```
+additionalAuthenticatedData || "" || initializationVector || ciphertext || authenticationTag
+```
+which is equivalent to
 ```
 additionalAuthenticatedData || initializationVector || ciphertext || authenticationTag
-```
-
-If neither `additionalAuthenticatedData` nor `ciphertextMetadata` is present, the hash is computed over the decoded
-
-```
-initializationVector || ciphertext || authenticationTag
 ```
 
 The CDIV shown in the Encrypt response example is computed as follows. The encrypt request includes 33-bytes of AAD, and the response has 13-bytes of ciphertext metadata, 12-bytes of initialization vector, 12 bytes of ciphertext (same size as plaintext because AES-GCM is a stream cipher) and a 16-byte authentication tag. If we concatenate the `additionalAuthenticatedData`, `ciphertextMetadata`, `initializationVector`, `ciphertext` and the `authenticationTag` 
@@ -1120,4 +1117,8 @@ Collecting GetHealthStatus metrics ...
     * Replaced TBD references with actual numbers for health status polling frequency and TPS quota on AWS KMS external key stores.
  * Version 1.0.1 (Nov 10, 2022):
     * Added a link to the list of public certificate authorities trusted by AWS KMS for authenticating an external key store proxy.
-
+ * Version 1.0.2 (Jan 13, 2023):
+    * Clarified that standard Base64 encoding (not URL-safe encoding) as defined in Section 4 of RFC 4687 is used in this document.
+    * Fixed typos: the stated length of Base64 encoded values was off by one in two places and the ciphertextMetadata length must not exceed 20 bytes before Base64 encoding.
+    * Clarified that xksProxyFleetSize must be an integer greater than zero
+    * Simplified the description of CDIV computation in Appendix C (no change to the computation itself).
