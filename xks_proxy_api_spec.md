@@ -41,7 +41,7 @@
 
 # External Key Store Proxy API Specification
 
-*Last Updated: Jan 17, 2023*
+*Last Updated: May 2, 2024*
 
 See [Appendix E](#appendix-e-change-log) for a history of the changes.
 
@@ -150,13 +150,11 @@ This API fetches metadata associated with the external key including its type, s
 The HTTP body of the request contains requestMetadata fields that provide additional context on the request being made. This information is helpful for auditing and for implementing an optional secondary layer of authorization at the XKS Proxy (see a later section on [Authorization](#authorization)). There is no expectation for the XKS Proxy to validate any information included in the requestMetadata beyond validating the signature that covers the entire request payload. 
 
 1. **requestMetadata** - Nested structure which contains request metadata.
-    1. **awsPrincipalArn** - This is the ARN of the principal that invoked KMS CreateKey or DescribeKey (see [aws:PrincipalArn](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_condition-keys.html#condition-keys-principalarn)). When the caller is another AWS service, this field will contain either the service principal ending in amazonaws.com, such as [ec2.amazonaws.com](http://ec2.amazonaws.com/) or “AWS Internal”. This field is REQUIRED.
-    2. **awsSourceVpc** - This field is OPTIONAL. It is present if and only if the KMS API request was made against a VPC endpoint. When present, this field indicates the VPC where the request originated (see [aws:SourceVpc](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_condition-keys.html#condition-keys-sourcevpc)).
-        1. **awsSourceVpce** - This field is OPTIONAL. It is present if and only if the KMS API request was made against a VPC endpoint. When present, this field indicates the VPC endpoint where the request was made (see [aws:SourceVpce](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_condition-keys.html#condition-keys-sourcevpce))
-    3. **kmsKeyArn** - This is the ARN of the KMS Key on which the CreateKey or DescribeKey API was invoked. This field is OPTIONAL. KMS will include this field in the GetKeyMetadata API call if the kmsOperation is DescribeKey but not if the kmsOperation is CreateKey since the keyArn is created after KMS validates the external key. 
-    4. **kmsOperation** - This is the KMS API call that resulted in the XKS Proxy API request, e.g. both CreateKey and DescribeKey can result in a GetKeyMetadata call. This field is REQUIRED. The XKS Proxy MUST NOT reject a request as invalid if it sees a kmsOperation other than those listed for this API call. In the future, KMS may introduce a new API (BulkDescribeKey, say) that can be satisfied by calling one of the XKS APIs listed in this document. For proxies that implement [secondary authorization](#authorization), it is acceptable for XKS API requests made as part of the new KMS API to fail authorization. It is easier for a customer to update their XKS Proxy authorization policy than to update their XKS Proxy software. 
+    1. **awsPrincipalArn** - This is the ARN of the principal that invoked KMS CreateKey (see [aws:PrincipalArn](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_condition-keys.html#condition-keys-principalarn)). When the caller is another AWS service, this field will contain either the service principal ending in amazonaws.com, such as [ec2.amazonaws.com](http://ec2.amazonaws.com/) or “AWS Internal”. This field is REQUIRED.
+    2. **awsSourceVpc** - This field is OPTIONAL. It is present if and only if the KMS API request was made against a VPC endpoint, and caller and  is same as the KMS key owner. When present, this field indicates the VPC where the request originated (see [aws:SourceVpc](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_condition-keys.html#condition-keys-sourcevpc)).
+    3. **awsSourceVpce** - This field is OPTIONAL. It is present if and only if the KMS API request was made against a VPC endpoint, and caller and  is same as the KMS key owner. When present, this field indicates the VPC endpoint used for the request (see [aws:SourceVpce](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_condition-keys.html#condition-keys-sourcevpce))
+    4. **kmsOperation** - This is the KMS API call that resulted in the XKS Proxy API request, e.g. CreateKey can result in a GetKeyMetadata call. This field is REQUIRED. The XKS Proxy MUST NOT reject a request as invalid if it sees a kmsOperation other than those listed for this API call. In the future, KMS may introduce a new API that can be satisfied by calling one of the XKS APIs listed in this document. For proxies that implement [secondary authorization](#authorization), it is acceptable for XKS API requests made as part of the new KMS API to fail authorization. It is easier for a customer to update their XKS Proxy authorization policy than to update their XKS Proxy software.
     5. **kmsRequestId** - This is the requestId of the call made to KMS which is visible in AWS CloudTrail. The XKS proxy SHOULD log this field to allow a customer to correlate AWS CloudTrail entries with log entries in the XKS Proxy. This field typically follows the format for [UUID](https://en.wikipedia.org/wiki/Universally_unique_identifier)s but the XKS Proxy MUST treat this as an opaque string and MUST NOT perform any validation on its structure. This field is REQUIRED.
-    6. **kmsViaService** - This field is OPTIONAL. This field is present if and only if an AWS Service called the KMS API on behalf of a customer see [kms:ViaService](https://docs.aws.amazon.com/kms/latest/developerguide/policy-conditions.html#conditions-kms-via-service)).
 
         **NOTE**: The kmsKeyArn includes the Region in which the KMS request was made and the account that owns the resource. The awsPrincipalArn includes the account of the caller. The XKS Proxy can also use the Region and account (both key owner and caller) fields in its authorization decision.
 
@@ -170,10 +168,8 @@ The HTTP body of the request contains requestMetadata fields that provide additi
         "awsPrincipalArn": string,
         "awsSourceVpc": string, // optional
         "awsSourceVpce": string, // optional
-        "kmsKeyArn": string,
         "kmsOperation": string,
-        "kmsRequestId": string,
-        "kmsViaService": string // optional     
+        "kmsRequestId": string     
     }
 }
 ```
@@ -184,10 +180,8 @@ The HTTP body of the request contains requestMetadata fields that provide additi
 {
     "requestMetadata": {
         "awsPrincipalArn": "arn:aws:iam::123456789012:user/Alice",
-        "kmsKeyArn": "arn:aws:kms:us-east-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab",
-        "kmsOperation": "DescribeKey",
-        "kmsRequestId": "4112f4d6-db54-4af4-ae30-c55a22a8dfae",
-        "kmsViaService": "ebs"      
+        "kmsOperation": "CreateKey",
+        "kmsRequestId": "4112f4d6-db54-4af4-ae30-c55a22a8dfae"
     }
 }
 ```
@@ -226,7 +220,7 @@ The following attributes MUST be present in response payload:
 
 **KMS Considerations:**
 
-KMS invokes the XKS Proxy’s GetKeyMetadata API when a customer calls either the KMS CreateKey or DescribeKey API for a KMS key in an external key store. 
+KMS invokes the XKS Proxy’s GetKeyMetadata API when a customer calls the KMS CreateKey API for a KMS key in an external key store. 
 
 Version 1 of this specification only supports creation of AES keys within KMS. When KMS calls GetKeyMetadata as part of a KMS CreateKey call, it will look for specific values in the GetKeyMetadata response. Invocation of the KMS CreateKey API will fail if any one (or more) of the following is true:
 
@@ -258,8 +252,8 @@ The HTTP body of the request contains requestMetadata along with input parameter
 
 1. **requestMetadata** - Nested structure that contains request metadata.
     1. **awsPrincipalArn** - This is the ARN of the principal that invoked KMS Encrypt, GenerateDataKey, GenerateDataKeyWithoutPlaintext or ReEncrypt API. When the caller is another AWS service, this field will contain either the service principal ending in amazonaws.com, such as [ec2.amazonaws.com](http://ec2.amazonaws.com/) or “AWS Internal”. This field is REQUIRED.
-    2. **awsSourceVpc** - This field is OPTIONAL. It is present if and only if the KMS API request was made against a VPC endpoint. When present, this field indicates the VPC where the request originated (see [aws:SourceVpc](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_condition-keys.html#condition-keys-sourcevpc)).
-    3. **awsSourceVpce** - This field is OPTIONAL. It is present if and only if the KMS API request was made against a VPC endpoint. When present, this field indicates the VPC endpoint where the request was made (see [aws:SourceVpce](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_condition-keys.html#condition-keys-sourcevpce))
+    2. **awsSourceVpc** - This field is OPTIONAL. It is present if and only if the KMS API request was made against a VPC endpoint, and caller and  is same as the KMS key owner. When present, this field indicates the VPC where the request originated (see [aws:SourceVpc](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_condition-keys.html#condition-keys-sourcevpc)).
+    3. **awsSourceVpce** - This field is OPTIONAL. It is present if and only if the KMS API request was made against a VPC endpoint, and caller and  is same as the KMS key owner. When present, this field indicates the VPC endpoint used for the request (see [aws:SourceVpce](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_condition-keys.html#condition-keys-sourcevpce))
     4. **kmsKeyArn** - This is the ARN of the KMS Key on which the Encrypt, ReEncrypt, GenerateDataKey or GenerateDataKeyWithoutPlaintext API was invoked. This field is REQUIRED.
     5. **kmsOperation** - This is the KMS API call that resulted in the XKS Proxy API request, e.g. any one of four KMS APIs (Encrypt, ReEncrypt, GenerateDataKey, GenerateDataKeyWithoutPlaintext) can result in an Encrypt call. This field is REQUIRED. The XKS Proxy MUST NOT reject a request as invalid if it sees a kmsOperation other than those listed for this API call. In the future, KMS may introduce a new API (BulkEncrypt, say) that can be satisfied by calling one of the XKS APIs listed in this document. For proxies that implement [secondary authorization](#authorization), it is acceptable for XKS API requests made as part of the new KMS API to fail authorization. It is easier for a customer to update their XKS Proxy authorization policy than to update their XKS Proxy software. 
     6. **kmsRequestId** - This is the requestId of the call made to KMS that is visible in AWS CloudTrail. The XKS proxy SHOULD log this field to allow a customer to correlate AWS CloudTrail entries with log entries in the XKS Proxy. This field typically follows the format for [UUID](https://en.wikipedia.org/wiki/Universally_unique_identifier)s but the XKS Proxy MUST treat this as an opaque string and MUST NOT perform any validation on its structure. This field is REQUIRED.
@@ -389,8 +383,8 @@ The HTTP body of the request contains requestMetadata along with input parameter
 
 1. **requestMetadata** - Nested structure which contains request metadata.
     1. **awsPrincipalArn** - This is the ARN of the principal that invoked the KMS Decrypt or ReEncrypt API. When the caller is another AWS service, this field will contain either the service principal ending in amazonaws.com, such as [ec2.amazonaws.com](http://ec2.amazonaws.com/) or “AWS Internal”. This field is REQUIRED.
-    2. **awsSourceVpc** - This field is OPTIONAL. It is present if and only if the KMS API request was made against a VPC endpoint. When present, this field indicates the VPC where the request originated (see [aws:SourceVpc](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_condition-keys.html#condition-keys-sourcevpc)).
-    3. **awsSourceVpce** - This field is OPTIONAL. It is present if and only if the KMS API request was made against a VPC endpoint. When present, this field indicates the VPC endpoint where the request was made (see [aws:SourceVpce](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_condition-keys.html#condition-keys-sourcevpce))
+    2. **awsSourceVpc** - This field is OPTIONAL. It is present if and only if the KMS API request was made against a VPC endpoint, and caller and  is same as the KMS key owner. When present, this field indicates the VPC where the request originated (see [aws:SourceVpc](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_condition-keys.html#condition-keys-sourcevpc)).
+    3. **awsSourceVpce** - This field is OPTIONAL. It is present if and only if the KMS API request was made against a VPC endpoint, and caller and  is same as the KMS key owner. When present, this field indicates the VPC endpoint used for the request (see [aws:SourceVpce](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_condition-keys.html#condition-keys-sourcevpce))
     4. **kmsKeyArn** - This is the ARN of the KMS Key on which the Decrypt API was invoked. This field is REQUIRED.
     5. **kmsOperation** - This is the KMS API call (either Decrypt or ReEncrypt) that resulted in the XKS Proxy API request. This field is REQUIRED. In the future, The XKS Proxy MUST NOT reject a request as invalid if it sees a kmsOperation other than those listed for this API call. KMS may introduce a new API (BulkDecrypt, say) that can be satisfied by calling one of the XKS APIs listed in this document. For proxies that implement [secondary authorization](#authorization), it is acceptable for XKS API requests made as part of the new KMS API to fail authorization. It is easier for a customer to update their XKS Proxy authorization policy than to update their XKS Proxy software. 
     6. **kmsRequestId** - This is the requestId of the call made to KMS which is visible in AWS CloudTrail. The XKS proxy SHOULD log this field to allow a customer to correlate AWS CloudTrail entries with log entries in the XKS Proxy. This field typically follows the format for [UUID](https://en.wikipedia.org/wiki/Universally_unique_identifier)s but the XKS Proxy MUST treat this as an opaque string and MUST NOT perform any validation on its structure. This field is REQUIRED.
@@ -1122,3 +1116,6 @@ Collecting GetHealthStatus metrics ...
     * Fixed typos: the stated length of Base64 encoded values was off by one in two places and the ciphertextMetadata length must not exceed 20 bytes before Base64 encoding.
     * Clarified that xksProxyFleetSize must be an integer greater than zero
     * Simplified the description of CDIV computation in Appendix C (no change to the computation itself).
+ *  * Version 1.0.3 (May 2, 2024):
+    * Clarified the optional existence of awsSourceVpc and awsSourceVpce in requestMetadata.
+    * Removed DescribeKey from KMS operations using GetKeyMetadata.
