@@ -124,13 +124,31 @@ Certificate fingerprints:
 	 SHA256: F3:56:BE:A2:44:B7:A9:1E:B3:5D:53:CA:9A:D7:86:4A:CE:01:8E:2D:35:D5:F8:F9:6D:DF:68:A6:F4:1A:A4:74
 **************************************************************************************
 **************************************************************************************
+Alias name: atostrustedrootrootcaecctls2021
+Owner: C=DE, O=Atos, CN=Atos TrustedRoot Root CA ECC TLS 2021
+Issuer: C=DE, O=Atos, CN=Atos TrustedRoot Root CA ECC TLS 2021
+Valid from: Thu Apr 22 02:26:23 PDT 2021 until: Wed Apr 17 02:26:22 PDT 2041
+Certificate fingerprints:
+	 SHA1: 9E:BC:75:10:42:B3:02:F3:81:F4:F7:30:62:D4:8F:C3:A7:51:B2:DD
+	 SHA256: B2:FA:E5:3E:14:CC:D7:AB:92:12:06:47:01:AE:27:9C:1D:89:88:FA:CB:77:5F:A8:A0:08:91:4E:66:39:88:A8
+**************************************************************************************
+**************************************************************************************
+Alias name: atostrustedrootrootcarsatls2021
+Owner: C=DE, O=Atos, CN=Atos TrustedRoot Root CA RSA TLS 2021
+Issuer: C=DE, O=Atos, CN=Atos TrustedRoot Root CA RSA TLS 2021
+Valid from: Thu Apr 22 02:21:10 PDT 2021 until: Wed Apr 17 02:21:09 PDT 2041
+Certificate fingerprints:
+	 SHA1: 18:52:3B:0D:06:37:E4:D6:3A:DF:23:E4:98:FB:5B:16:FB:86:74:48
+	 SHA256: 81:A9:08:8E:A5:9F:B3:64:C5:48:A6:F8:55:59:09:9B:6F:04:05:EF:BF:18:E5:32:4E:C9:F4:57:BA:00:11:2F
+**************************************************************************************
+**************************************************************************************
 Alias name: autoridaddecertificacionfirmaprofesionalcifa62634068
 Owner: CN=Autoridad de Certificacion Firmaprofesional CIF A62634068, C=ES
 Issuer: CN=Autoridad de Certificacion Firmaprofesional CIF A62634068, C=ES
-Valid from: Wed May 20 01:38:15 PDT 2009 until: Tue Dec 31 00:38:15 PST 2030
+Valid from: Tue Sep 23 08:22:07 PDT 2014 until: Mon May 05 08:22:07 PDT 2036
 Certificate fingerprints:
-	 SHA1: AE:C5:FB:3F:C8:E1:BF:C4:E5:4F:03:07:5A:9A:E8:00:B7:F7:B6:FA
-	 SHA256: 04:04:80:28:BF:1F:28:64:D4:8F:9A:D4:D8:32:94:36:6A:82:88:56:55:3F:3B:14:30:3F:90:14:7F:5D:40:EF                                             .7
+	 SHA1: 0B:BE:C2:27:22:49:CB:39:AA:DB:35:5C:53:E3:8C:AE:78:FF:B6:FE
+	 SHA256: 57:DE:05:83:EF:D2:B2:6E:03:61:DA:99:DA:9D:F4:64:8D:EF:7E:E8:44:1C:3B:72:8A:FA:9B:CD:E0:F9:B2:6A
 **************************************************************************************
 **************************************************************************************
 Alias name: baltimorecybertrustroot
@@ -167,6 +185,24 @@ Valid from: Thu Jul 19 02:15:30 PDT 2012 until: Sat Jul 19 02:15:30 PDT 2042
 Certificate fingerprints:
 	 SHA1: B5:61:EB:EA:A4:DE:E4:25:4B:69:1A:98:A5:57:47:C2:34:C7:D9:71
 	 SHA256: E2:3D:4A:03:6D:7B:70:E9:F5:95:B1:42:20:79:D2:B9:1E:DF:BB:1F:B6:51:A0:63:3E:AA:8A:9D:C5:F8:07:03
+**************************************************************************************
+**************************************************************************************
+Alias name: certainlyroote1
+Owner: CN=Certainly Root E1, O=Certainly, C=US
+Issuer: CN=Certainly Root E1, O=Certainly, C=US
+Valid from: Wed Mar 31 17:00:00 PDT 2021 until: Sat Mar 31 17:00:00 PDT 2046
+Certificate fingerprints:
+	 SHA1: F9:E1:6D:DC:01:89:CF:D5:82:45:63:3E:C5:37:7D:C2:EB:93:6F:2B
+	 SHA256: B4:58:5F:22:E4:AC:75:6A:4E:86:12:A1:36:1C:5D:9D:03:1A:93:FD:84:FE:BB:77:8F:A3:06:8B:0F:C4:2D:C2
+**************************************************************************************
+**************************************************************************************
+Alias name: certainlyrootr1
+Owner: CN=Certainly Root R1, O=Certainly, C=US
+Issuer: CN=Certainly Root R1, O=Certainly, C=US
+Valid from: Wed Mar 31 17:00:00 PDT 2021 until: Sat Mar 31 17:00:00 PDT 2046
+Certificate fingerprints:
+	 SHA1: A0:50:EE:0F:28:71:F4:27:B2:12:6D:6F:50:96:25:BA:CC:86:42:AF
+	 SHA256: 77:B8:2C:D8:64:4C:43:05:F7:AC:C5:CB:15:6B:45:67:50:04:03:3D:51:C6:0C:62:02:A8:E0:C3:34:67:D3:A0
 **************************************************************************************
 **************************************************************************************
 Alias name: certigna
@@ -250,6 +286,42 @@ Certificate fingerprints:
 	 SHA256: 5C:C3:D7:8E:4E:1D:5E:45:54:7A:04:E6:87:3E:64:F9:0C:F9:53:6D:1C:CC:2E:F8:00:F3:55:C4:C5:FD:70:FD
 **************************************************************************************
 **************************************************************************************
+Alias name: commscopepublictrusteccroot01
+Owner: CN=CommScope Public Trust ECC Root-01, O=CommScope, C=US
+Issuer: CN=CommScope Public Trust ECC Root-01, O=CommScope, C=US
+Valid from: Wed Apr 28 10:35:43 PDT 2021 until: Sat Apr 28 10:35:42 PDT 2046
+Certificate fingerprints:
+	 SHA1: 07:86:C0:D8:DD:8E:C0:80:98:06:98:D0:58:7A:EF:DE:A6:CC:A2:5D
+	 SHA256: 11:43:7C:DA:7B:B4:5E:41:36:5F:45:B3:9A:38:98:6B:0D:E0:0D:EF:34:8E:0C:7B:B0:87:36:33:80:0B:C3:8B
+**************************************************************************************
+**************************************************************************************
+Alias name: commscopepublictrusteccroot02
+Owner: CN=CommScope Public Trust ECC Root-02, O=CommScope, C=US
+Issuer: CN=CommScope Public Trust ECC Root-02, O=CommScope, C=US
+Valid from: Wed Apr 28 10:44:54 PDT 2021 until: Sat Apr 28 10:44:53 PDT 2046
+Certificate fingerprints:
+	 SHA1: 3C:3F:EF:57:0F:FE:65:93:86:9E:A0:FE:B0:F6:ED:8E:D1:13:C7:E5
+	 SHA256: 2F:FB:7F:81:3B:BB:B3:C8:9A:B4:E8:16:2D:0F:16:D7:15:09:A8:30:CC:9D:73:C2:62:E5:14:08:75:D1:AD:4A
+**************************************************************************************
+**************************************************************************************
+Alias name: commscopepublictrustrsaroot01
+Owner: CN=CommScope Public Trust RSA Root-01, O=CommScope, C=US
+Issuer: CN=CommScope Public Trust RSA Root-01, O=CommScope, C=US
+Valid from: Wed Apr 28 09:45:54 PDT 2021 until: Sat Apr 28 09:45:53 PDT 2046
+Certificate fingerprints:
+	 SHA1: 6D:0A:5F:F7:B4:23:06:B4:85:B3:B7:97:64:FC:AC:75:F5:33:F2:93
+	 SHA256: 02:BD:F9:6E:2A:45:DD:9B:F1:8F:C7:E1:DB:DF:21:A0:37:9B:A3:C9:C2:61:03:44:CF:D8:D6:06:FE:C1:ED:81
+**************************************************************************************
+**************************************************************************************
+Alias name: commscopepublictrustrsaroot02
+Owner: CN=CommScope Public Trust RSA Root-02, O=CommScope, C=US
+Issuer: CN=CommScope Public Trust RSA Root-02, O=CommScope, C=US
+Valid from: Wed Apr 28 10:16:43 PDT 2021 until: Sat Apr 28 10:16:42 PDT 2046
+Certificate fingerprints:
+	 SHA1: EA:B0:E2:52:1B:89:93:4C:11:68:F2:D8:9A:AC:22:4C:A3:8A:57:AE
+	 SHA256: FF:E9:43:D7:93:42:4B:4F:7C:44:0C:1C:3D:64:8D:53:63:F3:4B:82:DC:87:AA:7A:9F:11:8F:C5:DE:E1:01:F1
+**************************************************************************************
+**************************************************************************************
 Alias name: comodoaaaservicesroot
 Owner: CN=AAA Certificate Services, O=Comodo CA Limited, L=Salford, ST=Greater Manchester, C=GB
 Issuer: CN=AAA Certificate Services, O=Comodo CA Limited, L=Salford, ST=Greater Manchester, C=GB
@@ -284,15 +356,6 @@ Valid from: Mon Jan 18 16:00:00 PST 2010 until: Mon Jan 18 15:59:59 PST 2038
 Certificate fingerprints:
 	 SHA1: AF:E5:D2:44:A8:D1:19:42:30:FF:47:9F:E2:F8:97:BB:CD:7A:8C:B4
 	 SHA256: 52:F0:E1:C4:E5:8E:C6:29:29:1B:60:31:7F:07:46:71:B8:5D:7E:A8:0D:5B:07:27:34:63:53:4B:32:B4:02:34
-**************************************************************************************
-**************************************************************************************
-Alias name: cybertrustglobalroot
-Owner: CN=Cybertrust Global Root, O="Cybertrust, Inc"
-Issuer: CN=Cybertrust Global Root, O="Cybertrust, Inc"
-Valid from: Fri Dec 15 00:00:00 PST 2006 until: Wed Dec 15 00:00:00 PST 2021
-Certificate fingerprints:
-	 SHA1: 5F:43:E5:B1:BF:F8:78:8C:AC:1C:C7:CA:4A:9A:C6:22:2B:CC:34:C6
-	 SHA256: 96:0A:DF:00:63:E9:63:56:75:0C:29:65:DD:0A:08:67:DA:0B:9C:BD:6E:77:71:4A:EA:FB:23:49:AB:39:3D:A3
 **************************************************************************************
 **************************************************************************************
 Alias name: digicertassuredidrootca
@@ -358,6 +421,24 @@ Certificate fingerprints:
 	 SHA256: 74:31:E5:F4:C3:C1:CE:46:90:77:4F:0B:61:E0:54:40:88:3B:A9:A0:1E:D0:0B:A6:AB:D7:80:6E:D3:B1:18:CF
 **************************************************************************************
 **************************************************************************************
+Alias name: digicerttlseccp384rootg5
+Owner: CN=DigiCert TLS ECC P384 Root G5, O="DigiCert, Inc.", C=US
+Issuer: CN=DigiCert TLS ECC P384 Root G5, O="DigiCert, Inc.", C=US
+Valid from: Thu Jan 14 16:00:00 PST 2021 until: Sun Jan 14 15:59:59 PST 2046
+Certificate fingerprints:
+	 SHA1: 17:F3:DE:5E:9F:0F:19:E9:8E:F6:1F:32:26:6E:20:C4:07:AE:30:EE
+	 SHA256: 01:8E:13:F0:77:25:32:CF:80:9B:D1:B1:72:81:86:72:83:FC:48:C6:E1:3B:E9:C6:98:12:85:4A:49:0C:1B:05
+**************************************************************************************
+**************************************************************************************
+Alias name: digicerttlsrsa4096rootg5
+Owner: CN=DigiCert TLS RSA4096 Root G5, O="DigiCert, Inc.", C=US
+Issuer: CN=DigiCert TLS RSA4096 Root G5, O="DigiCert, Inc.", C=US
+Valid from: Thu Jan 14 16:00:00 PST 2021 until: Sun Jan 14 15:59:59 PST 2046
+Certificate fingerprints:
+	 SHA1: A7:88:49:DC:5D:7C:75:8C:8C:DE:39:98:56:B3:AA:D0:B2:A5:71:35
+	 SHA256: 37:1A:00:DC:05:33:B3:72:1A:7E:EB:40:E8:41:9E:70:79:9D:2B:0A:0F:2C:1D:80:69:31:65:F7:CE:C4:AD:75
+**************************************************************************************
+**************************************************************************************
 Alias name: digicerttrustedrootg4
 Owner: CN=DigiCert Trusted Root G4, OU=www.digicert.com, O=DigiCert Inc, C=US
 Issuer: CN=DigiCert Trusted Root G4, OU=www.digicert.com, O=DigiCert Inc, C=US
@@ -365,6 +446,24 @@ Valid from: Thu Aug 01 05:00:00 PDT 2013 until: Fri Jan 15 04:00:00 PST 2038
 Certificate fingerprints:
 	 SHA1: DD:FB:16:CD:49:31:C9:73:A2:03:7D:3F:C8:3A:4D:7D:77:5D:05:E4
 	 SHA256: 55:2F:7B:DC:F1:A7:AF:9E:6C:E6:72:01:7F:4F:12:AB:F7:72:40:C7:8E:76:1A:C2:03:D1:D9:D2:0A:C8:99:88
+**************************************************************************************
+**************************************************************************************
+Alias name: dtrustbrrootca12020
+Owner: CN=D-TRUST BR Root CA 1 2020, O=D-Trust GmbH, C=DE
+Issuer: CN=D-TRUST BR Root CA 1 2020, O=D-Trust GmbH, C=DE
+Valid from: Tue Feb 11 01:45:00 PST 2020 until: Sun Feb 11 01:44:59 PST 2035
+Certificate fingerprints:
+	 SHA1: 1F:5B:98:F0:E3:B5:F7:74:3C:ED:E6:B0:36:7D:32:CD:F4:09:41:67
+	 SHA256: E5:9A:AA:81:60:09:C2:2B:FF:5B:25:BA:D3:7D:F3:06:F0:49:79:7C:1F:81:D8:5A:B0:89:E6:57:BD:8F:00:44
+**************************************************************************************
+**************************************************************************************
+Alias name: dtrustevrootca12020
+Owner: CN=D-TRUST EV Root CA 1 2020, O=D-Trust GmbH, C=DE
+Issuer: CN=D-TRUST EV Root CA 1 2020, O=D-Trust GmbH, C=DE
+Valid from: Tue Feb 11 02:00:00 PST 2020 until: Sun Feb 11 01:59:59 PST 2035
+Certificate fingerprints:
+	 SHA1: 61:DB:8C:21:59:69:03:90:D8:7C:9C:12:86:54:CF:9D:3D:F4:DD:07
+	 SHA256: 08:17:0D:1A:A3:64:53:90:1A:2F:95:92:45:E3:47:DB:0C:8D:37:AB:AA:BC:56:B8:1A:A1:00:DC:95:89:70:DB
 **************************************************************************************
 **************************************************************************************
 Alias name: dtrustrootclass3ca22009
@@ -383,15 +482,6 @@ Valid from: Thu Nov 05 00:50:46 PST 2009 until: Mon Nov 05 00:50:46 PST 2029
 Certificate fingerprints:
 	 SHA1: 96:C9:1B:0B:95:B4:10:98:42:FA:D0:D8:22:79:FE:60:FA:B9:16:83
 	 SHA256: EE:C5:49:6B:98:8C:E9:86:25:B9:34:09:2E:EC:29:08:BE:D0:B0:F3:16:C2:D4:73:0C:84:EA:F1:F3:D3:48:81
-**************************************************************************************
-**************************************************************************************
-Alias name: ecacc
-Owner: CN=EC-ACC, OU=Jerarquia Entitats de Certificacio Catalanes, OU=Vegeu https://www.catcert.net/verarrel (c)03, OU=Serveis Publics de Certificacio, O=Agencia Catalana de Certificacio (NIF Q-0801176-I), C=ES
-Issuer: CN=EC-ACC, OU=Jerarquia Entitats de Certificacio Catalanes, OU=Vegeu https://www.catcert.net/verarrel (c)03, OU=Serveis Publics de Certificacio, O=Agencia Catalana de Certificacio (NIF Q-0801176-I), C=ES
-Valid from: Tue Jan 07 15:00:00 PST 2003 until: Tue Jan 07 14:59:59 PST 2031
-Certificate fingerprints:
-	 SHA1: 28:90:3A:63:5B:52:80:FA:E6:77:4C:0B:6D:A7:D6:BA:A6:4A:F2:E8
-	 SHA256: 88:49:7F:01:60:2F:31:54:24:6A:E2:8C:4D:5A:EF:10:F1:D8:7E:BB:76:62:6F:4A:E0:B7:F9:5B:A7:96:87:99
 **************************************************************************************
 **************************************************************************************
 Alias name: emsigneccrootcac3
@@ -493,13 +583,13 @@ Certificate fingerprints:
 	 SHA256: BE:B0:0B:30:83:9B:9B:C3:2C:32:E4:44:79:05:95:06:41:F2:64:21:B1:5E:D0:89:19:8B:51:8A:E2:EA:1B:99
 **************************************************************************************
 **************************************************************************************
-Alias name: etugracertificationauthority
-Owner: CN=E-Tugra Certification Authority, OU=E-Tugra Sertifikasyon Merkezi, O=E-Tuğra EBG Bilişim Teknolojileri ve Hizmetleri A.Ş., L=Ankara, C=TR
-Issuer: CN=E-Tugra Certification Authority, OU=E-Tugra Sertifikasyon Merkezi, O=E-Tuğra EBG Bilişim Teknolojileri ve Hizmetleri A.Ş., L=Ankara, C=TR
-Valid from: Tue Mar 05 04:09:48 PST 2013 until: Fri Mar 03 04:09:48 PST 2023
+Alias name: firmaprofesionalcarootaweb
+Owner: CN=FIRMAPROFESIONAL CA ROOT-A WEB, OID.2.5.4.97=VATES-A62634068, O=Firmaprofesional SA, C=ES
+Issuer: CN=FIRMAPROFESIONAL CA ROOT-A WEB, OID.2.5.4.97=VATES-A62634068, O=Firmaprofesional SA, C=ES
+Valid from: Wed Apr 06 02:01:36 PDT 2022 until: Sun Mar 31 02:01:36 PDT 2047
 Certificate fingerprints:
-	 SHA1: 51:C6:E7:08:49:06:6E:F3:92:D4:5C:A0:0D:6D:A3:62:8F:C3:52:39
-	 SHA256: B0:BF:D5:2B:B0:D7:D9:BD:92:BF:5D:4D:C1:3D:A2:55:C0:2C:54:2F:37:83:65:EA:89:39:11:F5:5E:55:F2:3C
+	 SHA1: A8:31:11:74:A6:14:15:0D:CA:77:DD:0E:E4:0C:5D:58:FC:A0:72:A5
+	 SHA256: BE:F2:56:DA:F2:6E:9C:69:BD:EC:16:02:35:97:98:F3:CA:F7:18:21:A0:3E:01:82:57:C5:3C:65:61:7F:3D:4A
 **************************************************************************************
 **************************************************************************************
 Alias name: gdcatrustauthr5root
@@ -516,8 +606,8 @@ Owner: CN=GlobalSign, O=GlobalSign, OU=GlobalSign ECC Root CA - R4
 Issuer: CN=GlobalSign, O=GlobalSign, OU=GlobalSign ECC Root CA - R4
 Valid from: Mon Nov 12 16:00:00 PST 2012 until: Mon Jan 18 19:14:07 PST 2038
 Certificate fingerprints:
-	 SHA1: 69:69:56:2E:40:80:F4:24:A1:E7:19:9F:14:BA:F3:EE:58:AB:6A:BB
-	 SHA256: BE:C9:49:11:C2:95:56:76:DB:6C:0A:55:09:86:D7:6E:3B:A0:05:66:7C:44:2C:97:62:B4:FB:B7:73:DE:22:8C
+	 SHA1: 6B:A0:B0:98:E1:71:EF:5A:AD:FE:48:15:80:77:10:F4:BD:6F:0B:28
+	 SHA256: B0:85:D7:0B:96:4F:19:1A:73:E4:AF:0D:54:AE:7A:0E:07:AA:FD:AF:9B:71:DD:08:62:13:8A:B7:32:5A:24:A2
 **************************************************************************************
 **************************************************************************************
 Alias name: globalsigneccrootcar5
@@ -536,15 +626,6 @@ Valid from: Tue Sep 01 05:00:00 PDT 1998 until: Fri Jan 28 04:00:00 PST 2028
 Certificate fingerprints:
 	 SHA1: B1:BC:96:8B:D4:F4:9D:62:2A:A8:9A:81:F2:15:01:52:A4:1D:82:9C
 	 SHA256: EB:D4:10:40:E4:BB:3E:C7:42:C9:E3:81:D3:1E:F2:A4:1A:48:B6:68:5C:96:E7:CE:F3:C1:DF:6C:D4:33:1C:99
-**************************************************************************************
-**************************************************************************************
-Alias name: globalsignrootcar2
-Owner: CN=GlobalSign, O=GlobalSign, OU=GlobalSign Root CA - R2
-Issuer: CN=GlobalSign, O=GlobalSign, OU=GlobalSign Root CA - R2
-Valid from: Fri Dec 15 00:00:00 PST 2006 until: Wed Dec 15 00:00:00 PST 2021
-Certificate fingerprints:
-	 SHA1: 75:E0:AB:B6:13:85:12:27:1C:04:F8:5F:DD:DE:38:E4:B7:24:2E:FE
-	 SHA256: CA:42:DD:41:74:5F:D0:B8:1E:B9:02:36:2C:F9:D8:BF:71:9D:A1:BD:1B:1E:FC:94:6F:5B:4C:99:F4:2C:1B:9E
 **************************************************************************************
 **************************************************************************************
 Alias name: globalsignrootcar3
@@ -583,15 +664,6 @@ Certificate fingerprints:
 	 SHA256: 4F:A3:12:6D:8D:3A:11:D1:C4:85:5A:4F:80:7C:BA:D6:CF:91:9D:3A:5A:88:B0:3B:EA:2C:63:72:D9:3C:40:C9
 **************************************************************************************
 **************************************************************************************
-Alias name: globaltrust2020
-Owner: CN=GLOBALTRUST 2020, O=e-commerce monitoring GmbH, C=AT
-Issuer: CN=GLOBALTRUST 2020, O=e-commerce monitoring GmbH, C=AT
-Valid from: Sun Feb 09 16:00:00 PST 2020 until: Sat Jun 09 17:00:00 PDT 2040
-Certificate fingerprints:
-	 SHA1: D0:67:C1:13:51:01:0C:AA:D0:C7:6A:65:37:31:16:26:4F:53:71:A2
-	 SHA256: 9A:29:6A:51:82:D1:D4:51:A2:E3:7F:43:9B:74:DA:AF:A2:67:52:33:29:F9:0F:9A:0D:20:07:C3:34:E2:3C:9A
-**************************************************************************************
-**************************************************************************************
 Alias name: godaddyclass2ca
 Owner: OU=Go Daddy Class 2 Certification Authority, O="The Go Daddy Group, Inc.", C=US
 Issuer: OU=Go Daddy Class 2 Certification Authority, O="The Go Daddy Group, Inc.", C=US
@@ -615,8 +687,8 @@ Owner: CN=GTS Root R1, O=Google Trust Services LLC, C=US
 Issuer: CN=GTS Root R1, O=Google Trust Services LLC, C=US
 Valid from: Tue Jun 21 17:00:00 PDT 2016 until: Sat Jun 21 17:00:00 PDT 2036
 Certificate fingerprints:
-	 SHA1: E1:C9:50:E6:EF:22:F8:4C:56:45:72:8B:92:20:60:D7:D5:A7:A3:E8
-	 SHA256: 2A:57:54:71:E3:13:40:BC:21:58:1C:BD:2C:F1:3E:15:84:63:20:3E:CE:94:BC:F9:D3:CC:19:6B:F0:9A:54:72
+	 SHA1: E5:8C:1C:C4:91:3B:38:63:4B:E9:10:6E:E3:AD:8E:6B:9D:D9:81:4A
+	 SHA256: D9:47:43:2A:BD:E7:B7:FA:90:FC:2E:6B:59:10:1B:12:80:E0:E1:C7:E4:E4:0F:A3:C6:88:7F:FF:57:A7:F4:CF
 **************************************************************************************
 **************************************************************************************
 Alias name: gtsrootr2
@@ -624,8 +696,8 @@ Owner: CN=GTS Root R2, O=Google Trust Services LLC, C=US
 Issuer: CN=GTS Root R2, O=Google Trust Services LLC, C=US
 Valid from: Tue Jun 21 17:00:00 PDT 2016 until: Sat Jun 21 17:00:00 PDT 2036
 Certificate fingerprints:
-	 SHA1: D2:73:96:2A:2A:5E:39:9F:73:3F:E1:C7:1E:64:3F:03:38:34:FC:4D
-	 SHA256: C4:5D:7B:B0:8E:6D:67:E6:2E:42:35:11:0B:56:4E:5F:78:FD:92:EF:05:8C:84:0A:EA:4E:64:55:D7:58:5C:60
+	 SHA1: 9A:44:49:76:32:DB:DE:FA:D0:BC:FB:5A:7B:17:BD:9E:56:09:24:94
+	 SHA256: 8D:25:CD:97:22:9D:BF:70:35:6B:DA:4E:B3:CC:73:40:31:E2:4C:F0:0F:AF:CF:D3:2D:C7:6E:B5:84:1C:7E:A8
 **************************************************************************************
 **************************************************************************************
 Alias name: gtsrootr3
@@ -633,8 +705,8 @@ Owner: CN=GTS Root R3, O=Google Trust Services LLC, C=US
 Issuer: CN=GTS Root R3, O=Google Trust Services LLC, C=US
 Valid from: Tue Jun 21 17:00:00 PDT 2016 until: Sat Jun 21 17:00:00 PDT 2036
 Certificate fingerprints:
-	 SHA1: 30:D4:24:6F:07:FF:DB:91:89:8A:0B:E9:49:66:11:EB:8C:5E:46:E5
-	 SHA256: 15:D5:B8:77:46:19:EA:7D:54:CE:1C:A6:D0:B0:C4:03:E0:37:A9:17:F1:31:E8:A0:4E:1E:6B:7A:71:BA:BC:E5
+	 SHA1: ED:E5:71:80:2B:C8:92:B9:5B:83:3C:D2:32:68:3F:09:CD:A0:1E:46
+	 SHA256: 34:D8:A7:3E:E2:08:D9:BC:DB:0D:95:65:20:93:4B:4E:40:E6:94:82:59:6E:8B:6F:73:C8:42:6B:01:0A:6F:48
 **************************************************************************************
 **************************************************************************************
 Alias name: gtsrootr4
@@ -642,8 +714,8 @@ Owner: CN=GTS Root R4, O=Google Trust Services LLC, C=US
 Issuer: CN=GTS Root R4, O=Google Trust Services LLC, C=US
 Valid from: Tue Jun 21 17:00:00 PDT 2016 until: Sat Jun 21 17:00:00 PDT 2036
 Certificate fingerprints:
-	 SHA1: 2A:1D:60:27:D9:4A:B1:0A:1C:4D:91:5C:CD:33:A0:CB:3E:2D:54:CB
-	 SHA256: 71:CC:A5:39:1F:9E:79:4B:04:80:25:30:B3:63:E1:21:DA:8A:30:43:BB:26:66:2F:EA:4D:CA:7F:C9:51:A4:BD
+	 SHA1: 77:D3:03:67:B5:E0:0C:15:F6:0C:38:61:DF:7C:E1:3B:92:46:4D:47
+	 SHA256: 34:9D:FA:40:58:C5:E2:63:12:3B:39:8A:E7:95:57:3C:4E:13:13:C8:3F:E6:8F:93:55:6C:D5:E8:03:1B:3C:7D
 **************************************************************************************
 **************************************************************************************
 Alias name: haricatlseccrootca2021
@@ -673,15 +745,6 @@ Certificate fingerprints:
 	 SHA256: 44:B5:45:AA:8A:25:E6:5A:73:CA:15:DC:27:FC:36:D2:4C:1C:B9:95:3A:06:65:39:B1:15:82:DC:48:7B:48:33
 **************************************************************************************
 **************************************************************************************
-Alias name: hellenicacademicandresearchinstitutionsrootca2011
-Owner: CN=Hellenic Academic and Research Institutions RootCA 2011, O=Hellenic Academic and Research Institutions Cert. Authority, C=GR
-Issuer: CN=Hellenic Academic and Research Institutions RootCA 2011, O=Hellenic Academic and Research Institutions Cert. Authority, C=GR
-Valid from: Tue Dec 06 05:49:52 PST 2011 until: Mon Dec 01 05:49:52 PST 2031
-Certificate fingerprints:
-	 SHA1: FE:45:65:9B:79:03:5B:98:A1:61:B5:51:2E:AC:DA:58:09:48:22:4D
-	 SHA256: BC:10:4F:15:A4:8B:E7:09:DC:A5:42:A7:E1:D4:B9:DF:6F:05:45:27:E8:02:EA:A9:2D:59:54:44:25:8A:FE:71
-**************************************************************************************
-**************************************************************************************
 Alias name: hellenicacademicandresearchinstitutionsrootca2015
 Owner: CN=Hellenic Academic and Research Institutions RootCA 2015, O=Hellenic Academic and Research Institutions Cert. Authority, L=Athens, C=GR
 Issuer: CN=Hellenic Academic and Research Institutions RootCA 2015, O=Hellenic Academic and Research Institutions Cert. Authority, L=Athens, C=GR
@@ -691,13 +754,13 @@ Certificate fingerprints:
 	 SHA256: A0:40:92:9A:02:CE:53:B4:AC:F4:F2:FF:C6:98:1C:E4:49:6F:75:5E:6D:45:FE:0B:2A:69:2B:CD:52:52:3F:36
 **************************************************************************************
 **************************************************************************************
-Alias name: hongkongpostrootca1
-Owner: CN=Hongkong Post Root CA 1, O=Hongkong Post, C=HK
-Issuer: CN=Hongkong Post Root CA 1, O=Hongkong Post, C=HK
-Valid from: Wed May 14 22:13:14 PDT 2003 until: Sun May 14 21:52:29 PDT 2023
+Alias name: hipkirootcag1
+Owner: CN=HiPKI Root CA - G1, O="Chunghwa Telecom Co., Ltd.", C=TW
+Issuer: CN=HiPKI Root CA - G1, O="Chunghwa Telecom Co., Ltd.", C=TW
+Valid from: Fri Feb 22 01:46:04 PST 2019 until: Thu Dec 31 07:59:59 PST 2037
 Certificate fingerprints:
-	 SHA1: D6:DA:A8:20:8D:09:D2:15:4D:24:B5:2F:CB:34:6E:B2:58:B2:8A:58
-	 SHA256: F9:E6:7D:33:6C:51:00:2A:C0:54:C6:32:02:2D:66:DD:A2:E7:E3:FF:F1:0A:D0:61:ED:31:D8:BB:B4:10:CF:B2
+	 SHA1: 6A:92:E4:A8:EE:1B:EC:96:45:37:E3:29:57:49:CD:96:E3:E5:D2:60
+	 SHA256: F0:15:CE:3C:C2:39:BF:EF:06:4B:E9:F1:D2:C4:17:E1:A0:26:4A:0A:94:BE:1F:0C:8D:12:18:64:EB:69:49:CC
 **************************************************************************************
 **************************************************************************************
 Alias name: hongkongpostrootca3
@@ -736,6 +799,15 @@ Certificate fingerprints:
 	 SHA256: 96:BC:EC:06:26:49:76:F3:74:60:77:9A:CF:28:C5:A7:CF:E8:A3:C0:AA:E1:1A:8F:FC:EE:05:C0:BD:DF:08:C6
 **************************************************************************************
 **************************************************************************************
+Alias name: isrgrootx2
+Owner: CN=ISRG Root X2, O=Internet Security Research Group, C=US
+Issuer: CN=ISRG Root X2, O=Internet Security Research Group, C=US
+Valid from: Thu Sep 03 17:00:00 PDT 2020 until: Mon Sep 17 09:00:00 PDT 2040
+Certificate fingerprints:
+	 SHA1: BD:B1:B9:3C:D5:97:8D:45:C6:26:14:55:F8:DB:95:C7:5A:D1:53:AF
+	 SHA256: 69:72:9B:8E:15:A8:6E:FC:17:7A:57:AF:B7:17:1D:FC:64:AD:D2:8C:2F:CA:8C:F1:50:7E:34:45:3C:CB:14:70
+**************************************************************************************
+**************************************************************************************
 Alias name: izenpecom
 Owner: CN=Izenpe.com, O=IZENPE S.A., C=ES
 Issuer: CN=Izenpe.com, O=IZENPE S.A., C=ES
@@ -752,7 +824,6 @@ Valid from: Tue Jun 16 04:30:18 PDT 2009 until: Sun Dec 30 03:30:18 PST 2029
 Certificate fingerprints:
 	 SHA1: 89:DF:74:FE:5C:F4:0F:4A:80:F9:E3:37:7D:54:DA:91:E1:01:31:8E
 	 SHA256: 3C:5F:81:FE:A5:FA:B8:2C:64:BF:A2:EA:EC:AF:CD:E8:E0:77:FC:86:20:A7:CA:E5:37:16:3D:F3:6E:DB:F3:78
-  RFC822Name: info@e-szigno.hu
 **************************************************************************************
 **************************************************************************************
 Alias name: microsofteccrootcertificateauthority2017
@@ -789,15 +860,6 @@ Valid from: Thu Dec 11 07:08:21 PST 2008 until: Wed Dec 06 07:08:21 PST 2028
 Certificate fingerprints:
 	 SHA1: 06:08:3F:59:3F:15:A1:04:A0:69:A4:6B:A9:03:D0:06:B7:97:09:91
 	 SHA256: 6C:61:DA:C3:A2:DE:F0:31:50:6B:E0:36:D2:A6:FE:40:19:94:FB:D1:3D:F9:C8:D4:66:59:92:74:C4:46:EC:98
-**************************************************************************************
-**************************************************************************************
-Alias name: networksolutionscertificateauthority
-Owner: CN=Network Solutions Certificate Authority, O=Network Solutions L.L.C., C=US
-Issuer: CN=Network Solutions Certificate Authority, O=Network Solutions L.L.C., C=US
-Valid from: Thu Nov 30 16:00:00 PST 2006 until: Mon Dec 31 15:59:59 PST 2029
-Certificate fingerprints:
-	 SHA1: 74:F8:A3:C3:EF:E7:B3:90:06:4B:83:90:3C:21:64:60:20:E5:DF:CE
-	 SHA256: 15:F0:BA:00:A3:AC:7A:F3:AC:88:4C:07:2B:10:11:A0:77:BD:77:C0:97:F4:01:64:B2:F8:59:8A:BD:83:86:0C
 **************************************************************************************
 **************************************************************************************
 Alias name: oistewisekeyglobalrootgbca
@@ -863,6 +925,24 @@ Certificate fingerprints:
 	 SHA256: 88:EF:81:DE:20:2E:B0:18:45:2E:43:F8:64:72:5C:EA:5F:BD:1F:C2:D9:D2:05:73:07:09:C5:D8:B8:69:0F:46
 **************************************************************************************
 **************************************************************************************
+Alias name: sectigopublicserverauthenticationroote46
+Owner: CN=Sectigo Public Server Authentication Root E46, O=Sectigo Limited, C=GB
+Issuer: CN=Sectigo Public Server Authentication Root E46, O=Sectigo Limited, C=GB
+Valid from: Sun Mar 21 17:00:00 PDT 2021 until: Wed Mar 21 16:59:59 PDT 2046
+Certificate fingerprints:
+	 SHA1: EC:8A:39:6C:40:F0:2E:BC:42:75:D4:9F:AB:1C:1A:5B:67:BE:D2:9A
+	 SHA256: C9:0F:26:F0:FB:1B:40:18:B2:22:27:51:9B:5C:A2:B5:3E:2C:A5:B3:BE:5C:F1:8E:FE:1B:EF:47:38:0C:53:83
+**************************************************************************************
+**************************************************************************************
+Alias name: sectigopublicserverauthenticationrootr46
+Owner: CN=Sectigo Public Server Authentication Root R46, O=Sectigo Limited, C=GB
+Issuer: CN=Sectigo Public Server Authentication Root R46, O=Sectigo Limited, C=GB
+Valid from: Sun Mar 21 17:00:00 PDT 2021 until: Wed Mar 21 16:59:59 PDT 2046
+Certificate fingerprints:
+	 SHA1: AD:98:F9:F3:E4:7D:75:3B:65:D4:82:B3:A4:52:17:BB:6E:F5:E4:38
+	 SHA256: 7B:B6:47:A6:2A:EE:AC:88:BF:25:7A:A5:22:D0:1F:FE:A3:95:E0:AB:45:C7:3F:93:F6:56:54:EC:38:F2:5A:06
+**************************************************************************************
+**************************************************************************************
 Alias name: secureglobalca
 Owner: CN=Secure Global CA, O=SecureTrust Corporation, C=US
 Issuer: CN=Secure Global CA, O=SecureTrust Corporation, C=US
@@ -890,13 +970,13 @@ Certificate fingerprints:
 	 SHA256: F1:C1:B5:0A:E5:A2:0D:D8:03:0E:C9:F6:BC:24:82:3D:D3:67:B5:25:57:59:B4:E7:1B:61:FC:E9:F7:37:5D:73
 **************************************************************************************
 **************************************************************************************
-Alias name: securitycommunicationrootca
-Owner: OU=Security Communication RootCA1, O=SECOM Trust.net, C=JP
-Issuer: OU=Security Communication RootCA1, O=SECOM Trust.net, C=JP
-Valid from: Mon Sep 29 21:20:49 PDT 2003 until: Fri Sep 29 21:20:49 PDT 2023
+Alias name: securitycommunicationeccrootca1
+Owner: CN=Security Communication ECC RootCA1, O="SECOM Trust Systems CO.,LTD.", C=JP
+Issuer: CN=Security Communication ECC RootCA1, O="SECOM Trust Systems CO.,LTD.", C=JP
+Valid from: Wed Jun 15 22:15:28 PDT 2016 until: Sun Jan 17 21:15:28 PST 2038
 Certificate fingerprints:
-	 SHA1: 36:B1:2B:49:F9:81:9E:D7:4C:9E:BC:38:0F:C6:56:8F:5D:AC:B2:F7
-	 SHA256: E7:5E:72:ED:9F:56:0E:EC:6E:B4:80:00:73:A4:3F:C3:AD:19:19:5A:39:22:82:01:78:95:97:4A:99:02:6B:6C
+	 SHA1: B8:0E:26:A9:BF:D2:B2:3B:C0:EF:46:C9:BA:C7:BB:F6:1D:0D:41:41
+	 SHA256: E7:4F:BD:A5:5B:D5:64:C4:73:A3:6B:44:1A:A7:99:C8:A6:8E:07:74:40:E8:28:8B:9F:A1:E5:0E:4B:BA:CA:11
 **************************************************************************************
 **************************************************************************************
 Alias name: securitycommunicationrootca2
@@ -906,6 +986,15 @@ Valid from: Thu May 28 22:00:39 PDT 2009 until: Mon May 28 22:00:39 PDT 2029
 Certificate fingerprints:
 	 SHA1: 5F:3B:8C:F2:F8:10:B3:7D:78:B4:CE:EC:19:19:C3:73:34:B9:C7:74
 	 SHA256: 51:3B:2C:EC:B8:10:D4:CD:E5:DD:85:39:1A:DF:C6:C2:DD:60:D8:7B:B7:36:D2:B5:21:48:4A:A4:7A:0E:BE:F6
+**************************************************************************************
+**************************************************************************************
+Alias name: securitycommunicationrootca3
+Owner: CN=Security Communication RootCA3, O="SECOM Trust Systems CO.,LTD.", C=JP
+Issuer: CN=Security Communication RootCA3, O="SECOM Trust Systems CO.,LTD.", C=JP
+Valid from: Wed Jun 15 23:17:16 PDT 2016 until: Sun Jan 17 22:17:16 PST 2038
+Certificate fingerprints:
+	 SHA1: C3:03:C8:22:74:92:E5:61:A2:9C:5F:79:91:2B:1E:44:13:91:30:3A
+	 SHA256: 24:A5:5C:2A:B0:51:44:2D:06:17:76:65:41:23:9A:4A:D0:32:D7:C5:51:75:AA:34:FF:DE:2F:BC:4F:5C:52:94
 **************************************************************************************
 **************************************************************************************
 Alias name: sslcomevrootcertificationauthorityecc
@@ -944,13 +1033,22 @@ Certificate fingerprints:
 	 SHA256: 85:66:6A:56:2E:E0:BE:5C:E9:25:C1:D8:89:0A:6F:76:A8:7E:C1:6D:4D:7D:5F:29:EA:74:19:CF:20:12:3B:69
 **************************************************************************************
 **************************************************************************************
-Alias name: staatdernederlandenevrootca
-Owner: CN=Staat der Nederlanden EV Root CA, O=Staat der Nederlanden, C=NL
-Issuer: CN=Staat der Nederlanden EV Root CA, O=Staat der Nederlanden, C=NL
-Valid from: Wed Dec 08 03:19:29 PST 2010 until: Thu Dec 08 03:10:28 PST 2022
+Alias name: sslcomtlseccrootca2022
+Owner: CN=SSL.com TLS ECC Root CA 2022, O=SSL Corporation, C=US
+Issuer: CN=SSL.com TLS ECC Root CA 2022, O=SSL Corporation, C=US
+Valid from: Thu Aug 25 09:33:48 PDT 2022 until: Sun Aug 19 09:33:47 PDT 2046
 Certificate fingerprints:
-	 SHA1: 76:E2:7E:C1:4F:DB:82:C1:C0:A6:75:B5:05:BE:3D:29:B4:ED:DB:BB
-	 SHA256: 4D:24:91:41:4C:FE:95:67:46:EC:4C:EF:A6:CF:6F:72:E2:8A:13:29:43:2F:9D:8A:90:7A:C4:CB:5D:AD:C1:5A
+	 SHA1: 9F:5F:D9:1A:54:6D:F5:0C:71:F0:EE:7A:BD:17:49:98:84:73:E2:39
+	 SHA256: C3:2F:FD:9F:46:F9:36:D1:6C:36:73:99:09:59:43:4B:9A:D6:0A:AF:BB:9E:7C:F3:36:54:F1:44:CC:1B:A1:43
+**************************************************************************************
+**************************************************************************************
+Alias name: sslcomtlsrsarootca2022
+Owner: CN=SSL.com TLS RSA Root CA 2022, O=SSL Corporation, C=US
+Issuer: CN=SSL.com TLS RSA Root CA 2022, O=SSL Corporation, C=US
+Valid from: Thu Aug 25 09:34:22 PDT 2022 until: Sun Aug 19 09:34:21 PDT 2046
+Certificate fingerprints:
+	 SHA1: EC:2C:83:40:72:AF:26:95:10:FF:0E:F2:03:EE:31:70:F6:78:9D:CA
+	 SHA256: 8F:AF:7D:2E:2C:B4:70:9B:B8:E0:B3:36:66:BF:75:A5:DD:45:B5:DE:48:0F:8E:A8:D4:BF:E6:BE:BC:17:F2:ED
 **************************************************************************************
 **************************************************************************************
 Alias name: starfieldclass2ca
@@ -1007,6 +1105,33 @@ Certificate fingerprints:
 	 SHA256: A1:33:9D:33:28:1A:0B:56:E5:57:D3:D3:2B:1C:E7:F9:36:7E:B0:94:BD:5F:A7:2A:7E:50:04:C8:DE:D7:CA:FE
 **************************************************************************************
 **************************************************************************************
+Alias name: telekomsecuritytlseccroot2020
+Owner: CN=Telekom Security TLS ECC Root 2020, O=Deutsche Telekom Security GmbH, C=DE
+Issuer: CN=Telekom Security TLS ECC Root 2020, O=Deutsche Telekom Security GmbH, C=DE
+Valid from: Tue Aug 25 00:48:20 PDT 2020 until: Fri Aug 25 16:59:59 PDT 2045
+Certificate fingerprints:
+	 SHA1: C0:F8:96:C5:A9:3B:01:06:21:07:DA:18:42:48:BC:E9:9D:88:D5:EC
+	 SHA256: 57:8A:F4:DE:D0:85:3F:4E:59:98:DB:4A:EA:F9:CB:EA:8D:94:5F:60:B6:20:A3:8D:1A:3C:13:B2:BC:7B:A8:E1
+**************************************************************************************
+**************************************************************************************
+Alias name: telekomsecuritytlsrsaroot2023
+Owner: CN=Telekom Security TLS RSA Root 2023, O=Deutsche Telekom Security GmbH, C=DE
+Issuer: CN=Telekom Security TLS RSA Root 2023, O=Deutsche Telekom Security GmbH, C=DE
+Valid from: Tue Mar 28 05:16:45 PDT 2023 until: Fri Mar 27 16:59:59 PDT 2048
+Certificate fingerprints:
+	 SHA1: 54:D3:AC:B3:BD:57:56:F6:85:9D:CE:E5:C3:21:E2:D4:AD:83:D0:93
+	 SHA256: EF:C6:5C:AD:BB:59:AD:B6:EF:E8:4D:A2:23:11:B3:56:24:B7:1B:3B:1E:A0:DA:8B:66:55:17:4E:C8:97:86:46
+**************************************************************************************
+**************************************************************************************
+Alias name: teliarootcav2
+Owner: CN=Telia Root CA v2, O=Telia Finland Oyj, C=FI
+Issuer: CN=Telia Root CA v2, O=Telia Finland Oyj, C=FI
+Valid from: Thu Nov 29 03:55:54 PST 2018 until: Sun Nov 29 03:55:54 PST 2043
+Certificate fingerprints:
+	 SHA1: B9:99:CD:D1:73:50:8A:C4:47:05:08:9C:8C:88:FB:BE:A0:2B:40:CD
+	 SHA256: 24:2B:69:74:2F:CB:1E:5B:2A:BF:98:89:8B:94:57:21:87:54:4E:5B:4D:99:11:78:65:73:62:1F:6A:74:B8:2C
+**************************************************************************************
+**************************************************************************************
 Alias name: teliasonerarootcav1
 Owner: CN=TeliaSonera Root CA v1, O=TeliaSonera
 Issuer: CN=TeliaSonera Root CA v1, O=TeliaSonera
@@ -1016,31 +1141,22 @@ Certificate fingerprints:
 	 SHA256: DD:69:36:FE:21:F8:F0:77:C1:23:A1:A5:21:C1:22:24:F7:22:55:B7:3E:03:A7:26:06:93:E8:A2:4B:0F:A3:89
 **************************************************************************************
 **************************************************************************************
-Alias name: trustcoreca1
-Owner: CN=TrustCor ECA-1, OU=TrustCor Certificate Authority, O=TrustCor Systems S. de R.L., L=Panama City, ST=Panama, C=PA
-Issuer: CN=TrustCor ECA-1, OU=TrustCor Certificate Authority, O=TrustCor Systems S. de R.L., L=Panama City, ST=Panama, C=PA
-Valid from: Thu Feb 04 04:32:33 PST 2016 until: Mon Dec 31 09:28:07 PST 2029
+Alias name: trustasiaglobalrootcag3
+Owner: CN=TrustAsia Global Root CA G3, O="TrustAsia Technologies, Inc.", C=CN
+Issuer: CN=TrustAsia Global Root CA G3, O="TrustAsia Technologies, Inc.", C=CN
+Valid from: Wed May 19 19:10:19 PDT 2021 until: Fri May 18 19:10:19 PDT 2046
 Certificate fingerprints:
-	 SHA1: 58:D1:DF:95:95:67:6B:63:C0:F0:5B:1C:17:4D:8B:84:0B:C8:78:BD
-	 SHA256: 5A:88:5D:B1:9C:01:D9:12:C5:75:93:88:93:8C:AF:BB:DF:03:1A:B2:D4:8E:91:EE:15:58:9B:42:97:1D:03:9C
+	 SHA1: 63:CF:B6:C1:27:2B:56:E4:88:8E:1C:23:9A:B6:2E:81:47:24:C3:C7
+	 SHA256: E0:D3:22:6A:EB:11:63:C2:E4:8F:F9:BE:3B:50:B4:C6:43:1B:E7:BB:1E:AC:C5:C3:6B:5D:5E:C5:09:03:9A:08
 **************************************************************************************
 **************************************************************************************
-Alias name: trustcorrootcertca1
-Owner: CN=TrustCor RootCert CA-1, OU=TrustCor Certificate Authority, O=TrustCor Systems S. de R.L., L=Panama City, ST=Panama, C=PA
-Issuer: CN=TrustCor RootCert CA-1, OU=TrustCor Certificate Authority, O=TrustCor Systems S. de R.L., L=Panama City, ST=Panama, C=PA
-Valid from: Thu Feb 04 04:32:16 PST 2016 until: Mon Dec 31 09:23:16 PST 2029
+Alias name: trustasiaglobalrootcag4
+Owner: CN=TrustAsia Global Root CA G4, O="TrustAsia Technologies, Inc.", C=CN
+Issuer: CN=TrustAsia Global Root CA G4, O="TrustAsia Technologies, Inc.", C=CN
+Valid from: Wed May 19 19:10:22 PDT 2021 until: Fri May 18 19:10:22 PDT 2046
 Certificate fingerprints:
-	 SHA1: FF:BD:CD:E7:82:C8:43:5E:3C:6F:26:86:5C:CA:A8:3A:45:5B:C3:0A
-	 SHA256: D4:0E:9C:86:CD:8F:E4:68:C1:77:69:59:F4:9E:A7:74:FA:54:86:84:B6:C4:06:F3:90:92:61:F4:DC:E2:57:5C
-**************************************************************************************
-**************************************************************************************
-Alias name: trustcorrootcertca2
-Owner: CN=TrustCor RootCert CA-2, OU=TrustCor Certificate Authority, O=TrustCor Systems S. de R.L., L=Panama City, ST=Panama, C=PA
-Issuer: CN=TrustCor RootCert CA-2, OU=TrustCor Certificate Authority, O=TrustCor Systems S. de R.L., L=Panama City, ST=Panama, C=PA
-Valid from: Thu Feb 04 04:32:23 PST 2016 until: Sun Dec 31 09:26:39 PST 2034
-Certificate fingerprints:
-	 SHA1: B8:BE:6D:CB:56:F1:55:B9:63:D4:12:CA:4E:06:34:C7:94:B2:1C:C0
-	 SHA256: 07:53:E9:40:37:8C:1B:D5:E3:83:6E:39:5D:AE:A5:CB:83:9E:50:46:F1:BD:0E:AE:19:51:CF:10:FE:C7:C9:65
+	 SHA1: 57:73:A5:61:5D:80:B2:E6:AC:38:82:FC:68:07:31:AC:9F:B5:92:5A
+	 SHA256: BE:4B:56:CB:50:56:C0:13:6A:52:6D:F4:44:50:8D:AA:36:A0:B5:4F:42:E4:AC:38:F7:2A:F4:70:E4:79:65:4C
 **************************************************************************************
 **************************************************************************************
 Alias name: trustwaveglobalcertificationauthority
@@ -1158,6 +1274,24 @@ Valid from: Sun Jan 31 16:00:00 PST 2010 until: Mon Jan 18 15:59:59 PST 2038
 Certificate fingerprints:
 	 SHA1: 2B:8F:1B:57:33:0D:BB:A2:D0:7A:6C:51:F7:0E:E9:0D:DA:B9:AD:8E
 	 SHA256: E7:93:C9:B0:2F:D8:AA:13:E2:1C:31:22:8A:CC:B0:81:19:64:3B:74:9C:89:89:64:B1:74:6D:46:C3:D4:CB:D2
+**************************************************************************************
+**************************************************************************************
+Alias name: vtruseccrootca
+Owner: CN=vTrus ECC Root CA, O="iTrusChina Co.,Ltd.", C=CN
+Issuer: CN=vTrus ECC Root CA, O="iTrusChina Co.,Ltd.", C=CN
+Valid from: Tue Jul 31 00:26:44 PDT 2018 until: Fri Jul 31 00:26:44 PDT 2043
+Certificate fingerprints:
+	 SHA1: F6:9C:DB:B0:FC:F6:02:13:B6:52:32:A6:A3:91:3F:16:70:DA:C3:E1
+	 SHA256: 30:FB:BA:2C:32:23:8E:2A:98:54:7A:F9:79:31:E5:50:42:8B:9B:3F:1C:8E:EB:66:33:DC:FA:86:C5:B2:7D:D3
+**************************************************************************************
+**************************************************************************************
+Alias name: vtrusrootca
+Owner: CN=vTrus Root CA, O="iTrusChina Co.,Ltd.", C=CN
+Issuer: CN=vTrus Root CA, O="iTrusChina Co.,Ltd.", C=CN
+Valid from: Tue Jul 31 00:24:05 PDT 2018 until: Fri Jul 31 00:24:05 PDT 2043
+Certificate fingerprints:
+	 SHA1: 84:1A:69:FB:F5:CD:1A:25:34:13:3D:E3:F8:FC:B8:99:D0:C9:14:B7
+	 SHA256: 8A:71:DE:65:59:33:6F:42:6C:26:E5:38:80:D0:0D:88:A1:8D:A4:C6:A9:1F:0D:CB:61:94:E2:06:C5:C9:63:87
 **************************************************************************************
 **************************************************************************************
 Alias name: xrampglobalcaroot
