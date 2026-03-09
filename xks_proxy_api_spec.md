@@ -41,7 +41,7 @@
 
 # External Key Store Proxy API Specification
 
-*Last Updated: May 15, 2024*
+*Last Updated: Mar 9, 2026*
 
 See [Appendix E](#appendix-e-change-log) for a history of the changes.
 
@@ -677,8 +677,7 @@ Communication between the XKS Proxy Management Fleet and XKS Proxy MUST be prote
 
 Customers use the KMS `CreateCustomKeyStore` API to create a custom key store of type `EXTERNAL_KEY_STORE`. As part of this API call, customers specify the XKS Proxy API endpoint and credentials. The credentials include an access key id and a secret access key which are used by AWS KMS to [sign](https://docs.aws.amazon.com/general/latest/gr/sigv4-calculate-signature.html) all XKS Proxy API requests using [AWS SigV4](https://docs.aws.amazon.com/general/latest/gr/signature-version-4.html). The same credentials are also configured by the customer at the XKS Proxy so the proxy can verify the signature independent of AWS authentication and authorization. Anyone who possesses this secret access key can make successful API calls to the XKS Proxy. The XKS Proxy administrator must ensure that this secret is not exposed to unauthorized users. [Appendix A](#appendix-a-using-sigv4-to-sign-xks-proxy-requests) describes SigV4 usage for signing requests from AWS KMS to the XKS Proxy.
 
-An XKS proxy MUST support SigV4-based authentication of XKS API requests. Additionally, an XKS proxy SHOULD support client-side TLS authentication (aka mutual TLS or mTLS). If the XKS proxy supports mTLS, it MUST allow the customer to configure both the subject name and the root certificate authority (CA) for the client certificate. The XKS proxy MUST terminate the TLS handshake if the client presents a certificate containing a different subject name or chained to a different certificate authority. When prompted for TLS client authentication by an XKS proxy, KMS will present a certificate with a subject common name (CN) containing the service principal `cks.kms.<Region>.amazonaws.com`. For example, in eu-west-1 (Ireland), KMS will present a client certificate with CN=`cks.kms.eu-west-1.amazonaws.com`. This certificate will be chained to one of the certificate authorities associated with [Amazon Trust Services](https://www.amazontrust.com/repository/). Customers that wish to authenticate AWS KMS via mTLS MUST configure their XKS proxy to only accept client-side certs with CN=`cks.kms.<Region>.amazonaws.com` and chained to one of the Amazon Trust Services CAs. If the shared secret used in SigV4 signing is accidentally exposed to an unauthorized entity, that entity will not be able to make successful XKS API calls if the proxy only allows mTLS connections from AWS KMS.
-
+Prior versions of this specification recommended XKS proxies to support mTLS as a secondary authentication mechanism. However, changes to the [Chrome Root Program Policy (Section 4.2.2)](https://googlechrome.github.io/chromerootprogram/policy-archive/policy-version-1-7/#422-pki-hierarchies-included-in-the-chrome-root-store) prohibit publicly trusted root CAs included in the Chrome Root Store from issuing certificates with the clientAuth Extended Key Usage (EKU) extension after June 15th, 2026. As a result, KMS can no longer obtain a client certificate suitable for mTLS from [Amazon Trust Services](https://www.amazontrust.com/repository/). Any XKS Proxy used to create a new [External Key Store](https://docs.aws.amazon.com/kms/latest/developerguide/keystore-external.html) in KMS after Mar 16th, 2026 MUST NOT require mTLS. After June 15th, 2026, any XKS proxy configured to require mTLS will be unable to communicate with KMS. Customers MUST rely on SigV4 authentication to verify that requests originate from AWS KMS.
 
 ### SigV4 credentials rotation
 
@@ -1122,3 +1121,5 @@ Collecting GetHealthStatus metrics ...
  * Version 1.0.4 (Feb 5, 2026):
     * Updated the list of public certificate authorities trusted by AWS KMS for authenticating an external key store proxy.
     * Fixed typos in the spec.
+ * Version 1.0.5 (Mar 9, 2026):
+    * Removed the recommendation for XKS proxies to support mTLS as a secondary authentication mechanism. Changes to the Chrome Root Program Policy prohibit publicly trusted root CAs from issuing certificates with the clientAuth EKU after June 15th, 2026, preventing KMS from obtaining a suitable client certificate from Amazon Trust Services.
